@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crushers Agalar - Olay Günlüğü & Lore Arşivi</title>
+    <title>crushers agalar ✰ - Lore & Olay Arşivi</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -101,7 +101,7 @@
             margin: 0 auto;
             padding: 1rem 1.5rem;
             display: flex;
-            align-between: center;
+            align-items: center;
             justify-content: space-between;
         }
 
@@ -296,13 +296,6 @@
 
         .category-item.active {
             border-left: 3px solid var(--primary);
-        }
-
-        .feed-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
         }
 
         .search-box {
@@ -541,7 +534,7 @@
             <div class="logo-area">
                 <div class="logo-icon"><i class="fa-solid fa-crown"></i></div>
                 <div class="logo-text">
-                    <h1>CRUSHERS AGALAR</h1>
+                    <h1>crushers agalar ✰</h1>
                     <span>Official Lore & Olay Arşivi</span>
                 </div>
             </div>
@@ -564,7 +557,7 @@
             <span style="display:inline-block; background:rgba(34,197,94,0.15); color:#22c55e; padding:4px 12px; border-radius:20px; font-weight:700; font-size:0.75rem; margin-bottom:1rem;">
                 <i class="fa-solid fa-circle" style="font-size:0.5rem; vertical-align:middle;"></i> Canlı Bulut Veritabanı Aktif
             </span>
-            <h2 class="hero-title">Topluluk Lore'una Hoş Geldiniz 📜</h2>
+            <h2 class="hero-title">crushers agalar ✰ Lore'una Hoş Geldiniz 📜</h2>
             <p class="hero-desc">Topluluktaki darbeleri kaybetmeyin. Herkes travmalarını canlı tutmak için buraya yazabilir!</p>
             <div class="stats-bar">
                 <div class="stat-item">
@@ -615,7 +608,7 @@
     <div class="modal" id="eventModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Yeni Olay / Travma Kaydet</h3>
+                <h3>Yeni Darbe / Travma Kaydet</h3>
                 <button class="close-btn" onclick="closeModal()">&times;</button>
             </div>
             <form id="eventForm" onsubmit="saveEvent(event)">
@@ -660,7 +653,7 @@
             <form onsubmit="saveCategory(event)">
                 <div class="form-group">
                     <label>Başlık Adı</label>
-                    <input type="text" id="newCategoryInput" placeholder="Örn: Oyun Dramaları" required>
+                    <input type="text" id="newCategoryInput" placeholder="Örn: Darbeler" required>
                 </div>
                 <button type="submit" class="btn" style="width:100%; justify-content:center;">Başlık Ekle</button>
             </form>
@@ -682,7 +675,7 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        let categories = ["Oyun Geceleri", "Komik Gaflar", "Büyük Dramalar", "Unutulmaz Anlar"];
+        let categories = ["Darbeler"];
         let events = [];
         let activeCategory = 'all';
         let currentImageData = "";
