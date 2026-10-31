@@ -1,980 +1,890 @@
-```html
 <!DOCTYPE html>
-<html lang="tr" class="dark">
+<html lang="tr" data-theme="lacivert">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crushers Agalar - Lore & Olay Günlüğü</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            900: '#312e81',
-                        },
-                        neon: {
-                            cyan: '#00f3ff',
-                            purple: '#b900ff',
-                            pink: '#ff007b',
-                            amber: '#ffb700'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- FontAwesome icons -->
+    <title>Crushers Agalar - Olay Günlüğü & Lore Arşivi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
     <style>
-        /* Theme Preset Variables */
         :root {
-            --bg-color: #0b0f17;
-            --text-color: #f3f4f6;
-            --panel-bg: rgba(17, 24, 39, 0.75);
-            --panel-border: rgba(255, 255, 255, 0.08);
-            --accent-color: #6366f1;
-            --accent-hover: #4f46e5;
-            --card-text-muted: #9ca3af;
+            --bg-main: #0b0f19;
+            --bg-card: rgba(22, 28, 45, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent-glow: rgba(99, 102, 241, 0.15);
+            --card-hover-border: rgba(99, 102, 241, 0.4);
         }
 
-        body.theme-lacivert {
-            --bg-color: #0a1128;
-            --text-color: #f1f5f9;
-            --panel-bg: rgba(15, 23, 42, 0.85);
-            --panel-border: rgba(56, 189, 248, 0.15);
-            --accent-color: #2563eb;
-            --accent-hover: #1d4ed8;
-            --card-text-muted: #94a3b8;
+        [data-theme="siyah"] {
+            --bg-main: #000000;
+            --bg-card: rgba(18, 18, 18, 0.85);
+            --border-color: rgba(255, 255, 255, 0.15);
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --accent-glow: rgba(255, 255, 255, 0.05);
+            --card-hover-border: rgba(255, 255, 255, 0.3);
         }
 
-        body.theme-siyah {
-            --bg-color: #050505;
-            --text-color: #f3f4f6;
-            --panel-bg: rgba(18, 18, 18, 0.85);
-            --panel-border: rgba(255, 255, 255, 0.1);
-            --accent-color: #3b82f6;
-            --accent-hover: #2563eb;
-            --card-text-muted: #9ca3af;
+        [data-theme="beyaz"] {
+            --bg-main: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent-glow: rgba(37, 99, 235, 0.1);
+            --card-hover-border: rgba(37, 99, 235, 0.3);
         }
 
-        body.theme-beyaz {
-            --bg-color: #f8fafc;
-            --text-color: #0f172a;
-            --panel-bg: rgba(255, 255, 255, 0.9);
-            --panel-border: rgba(226, 232, 240, 1);
-            --accent-color: #4f46e5;
-            --accent-hover: #4338ca;
-            --card-text-muted: #64748b;
+        [data-theme="bordo"] {
+            --bg-main: #1a0507;
+            --bg-card: rgba(45, 12, 16, 0.75);
+            --border-color: rgba(239, 68, 68, 0.2);
+            --primary: #e11d48;
+            --primary-hover: #be123c;
+            --text-main: #fff1f2;
+            --text-muted: #fda4af;
+            --accent-glow: rgba(225, 29, 72, 0.2);
+            --card-hover-border: rgba(225, 29, 72, 0.5);
         }
 
-        body.theme-bordo {
-            --bg-color: #1a080c;
-            --text-color: #fef2f2;
-            --panel-bg: rgba(43, 16, 23, 0.85);
-            --panel-border: rgba(244, 63, 94, 0.2);
-            --accent-color: #e11d48;
-            --accent-hover: #be123c;
-            --card-text-muted: #fda4af;
+        [data-theme="sari"] {
+            --bg-main: #141204;
+            --bg-card: rgba(38, 34, 10, 0.8);
+            --border-color: rgba(234, 179, 8, 0.25);
+            --primary: #eab308;
+            --primary-hover: #ca8a04;
+            --text-main: #fefce8;
+            --text-muted: #fef08a;
+            --accent-glow: rgba(234, 179, 8, 0.15);
+            --card-hover-border: rgba(234, 179, 8, 0.5);
         }
 
-        body.theme-sari {
-            --bg-color: #141204;
-            --text-color: #fefce8;
-            --panel-bg: rgba(35, 31, 12, 0.85);
-            --panel-border: rgba(234, 179, 8, 0.25);
-            --accent-color: #eab308;
-            --accent-hover: #ca8a04;
-            --card-text-muted: #fef08a;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding-bottom: 60px;
         }
 
-        .glass-panel {
-            background: var(--panel-bg);
+        header {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-between: center;
+            justify-content: space-between;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.3rem;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .logo-text h1 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .theme-selector {
+            display: flex;
+            gap: 6px;
+            background: rgba(0,0,0,0.2);
+            padding: 4px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .theme-btn {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .theme-btn.active {
+            border-color: #fff;
+        }
+
+        .theme-lacivert { background: #6366f1; }
+        .theme-siyah { background: #000000; }
+        .theme-beyaz { background: #ffffff; }
+        .theme-bordo { background: #e11d48; }
+        .theme-sari { background: #eab308; }
+
+        .btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .main-layout {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .hero-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
             backdrop-filter: blur(12px);
-            border: 1px solid var(--panel-border);
-        }
-        
-        .glass-panel-hover:hover {
-            border-color: var(--accent-color);
+            margin-bottom: 2rem;
+            grid-column: 1 / -1;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
+        .hero-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
         }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-color);
+
+        .hero-desc {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 700px;
+            line-height: 1.6;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #374151;
-            border-radius: 4px;
+
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .stat-item h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .stat-item p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.25rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .category-item {
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .category-item:hover, .category-item.active {
+            background: var(--accent-glow);
+            color: var(--text-main);
+        }
+
+        .category-item.active {
+            border-left: 3px solid var(--primary);
+        }
+
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 0.8rem 1rem 0.8rem 2.8rem;
+            border-radius: 12px;
+            color: var(--text-main);
+            outline: none;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .event-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .event-card:hover {
+            border-color: var(--card-hover-border);
+        }
+
+        .event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .event-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .author-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--accent-glow);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .author-info h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .author-info span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .category-badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: var(--accent-glow);
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .event-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .event-content {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+            white-space: pre-line;
+        }
+
+        .event-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-top: 0.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .event-footer {
+            display: flex;
+            gap: 15px;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .reaction-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .reaction-btn:hover {
+            color: var(--primary);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 550px;
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: var(--text-muted);
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            color: var(--text-main);
+            outline: none;
+        }
+
+        .file-upload-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.6rem 1rem;
+            background: var(--bg-card);
+            border: 1px dashed var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .file-upload-btn:hover {
+            border-color: var(--primary);
+            color: var(--text-main);
+        }
+
+        .preview-img-container {
+            margin-top: 10px;
+            position: relative;
+            display: none;
+        }
+
+        .preview-img-container img {
+            max-height: 120px;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-<body class="theme-siyah min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
+<body>
 
-    <!-- Top Navigation Header -->
-    <header class="sticky top-0 z-40 glass-panel border-b border-gray-800/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <!-- Logo & Brand -->
-                <div class="flex items-center space-x-3 cursor-pointer" onclick="resetFilters()">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-                        <i class="fa-solid font-bold fa-crown text-white text-lg"></i>
-                    </div>
-                    <div>
-                        <h1 class="font-extrabold text-lg sm:text-xl tracking-tight bg-gradient-to-r from-white via-indigo-200 to-indigo-400 bg-clip-text text-transparent">
-                            CRUSHERS AGALAR ✰
-                        </h1>
-                        <p class="text-[10px] text-indigo-400 tracking-wider font-semibold uppercase">Official Lore & Olay Arşivi</p>
-                    </div>
+    <header>
+        <div class="nav-container">
+            <div class="logo-area">
+                <div class="logo-icon"><i class="fa-solid fa-crown"></i></div>
+                <div class="logo-text">
+                    <h1>CRUSHERS AGALAR</h1>
+                    <span>Official Lore & Olay Arşivi</span>
                 </div>
-
-                <!-- Theme Switcher & Actions -->
-                <div class="flex items-center space-x-3">
-                    
-                    <!-- Theme Selector Palette -->
-                    <div class="flex items-center bg-gray-900/80 p-1.5 rounded-xl border border-gray-800 space-x-1.5" title="Tema Seçin">
-                        <button onclick="setTheme('lacivert')" class="w-5 h-5 rounded-full bg-blue-900 border border-blue-400 hover:scale-110 transition" title="Lacivert"></button>
-                        <button onclick="setTheme('siyah')" class="w-5 h-5 rounded-full bg-black border border-gray-600 hover:scale-110 transition" title="Siyah"></button>
-                        <button onclick="setTheme('beyaz')" class="w-5 h-5 rounded-full bg-white border border-gray-400 hover:scale-110 transition" title="Beyaz"></button>
-                        <button onclick="setTheme('bordo')" class="w-5 h-5 rounded-full bg-rose-950 border border-rose-500 hover:scale-110 transition" title="Bordo"></button>
-                        <button onclick="setTheme('sari')" class="w-5 h-5 rounded-full bg-amber-500 border border-yellow-300 hover:scale-110 transition" title="Sarı"></button>
-                    </div>
-
-                    <button onclick="openNewEventModal()" class="flex items-center space-x-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition duration-200 shadow-lg shadow-indigo-600/30 active:scale-95">
-                        <i class="fa-solid fa-plus"></i>
-                        <span class="hidden sm:inline">Yeni Olay Yaz</span>
-                    </button>
+            </div>
+            <div class="header-actions">
+                <div class="theme-selector">
+                    <div class="theme-btn theme-lacivert active" onclick="setTheme('lacivert')"></div>
+                    <div class="theme-btn theme-siyah" onclick="setTheme('siyah')"></div>
+                    <div class="theme-btn theme-beyaz" onclick="setTheme('beyaz')"></div>
+                    <div class="theme-btn theme-bordo" onclick="setTheme('bordo')"></div>
+                    <div class="theme-btn theme-sari" onclick="setTheme('sari')"></div>
                 </div>
+                <button class="btn" onclick="openModal()"><i class="fa-solid fa-plus"></i> <span>Olay Ekle</span></button>
             </div>
         </div>
     </header>
 
-    <!-- Main Content Area -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        
-        <!-- Hero Banner Card with Community Background Image -->
-        <div class="mb-8 rounded-3xl relative overflow-hidden shadow-2xl border border-white/10 group">
-            <!-- Background Image Overlay -->
-            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1400&q=80');"></div>
-            <!-- Gradient Contrast Layers -->
-            <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/80 to-black/60"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
+    <div class="main-layout">
 
-            <div class="relative z-10 p-6 sm:p-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div>
-                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-200 text-xs font-semibold mb-3 backdrop-blur-md">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span>Canlı Bulut Veritabanı Aktif</span>
-                    </div>
-                    
-                    <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-white mb-2">
-                        crushers agalar ✰
-                    </h2>
-                    
-                    <!-- Updated Tagline Text -->
-                    <p class="text-gray-200 text-base sm:text-lg max-w-2xl leading-relaxed font-medium">
-                        Topluluktaki darbeleri kaybetmeyin. Herkes travmalarını canlı tutmak için buraya yazabilir!
-                    </p>
+        <div class="hero-card">
+            <span style="display:inline-block; background:rgba(34,197,94,0.15); color:#22c55e; padding:4px 12px; border-radius:20px; font-weight:700; font-size:0.75rem; margin-bottom:1rem;">
+                <i class="fa-solid fa-circle" style="font-size:0.5rem; vertical-align:middle;"></i> Canlı Bulut Veritabanı Aktif
+            </span>
+            <h2 class="hero-title">Topluluk Lore'una Hoş Geldiniz 📜</h2>
+            <p class="hero-desc">Topluluktaki darbeleri kaybetmeyin. Herkes travmalarını canlı tutmak için buraya yazabilir!</p>
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <h3 id="stat-total">0</h3>
+                    <p>Toplam Olay</p>
                 </div>
-
-                <!-- Stats Summary -->
-                <div class="grid grid-cols-3 gap-3 sm:gap-4 bg-black/60 backdrop-blur-md p-4 rounded-2xl border border-white/10 text-center shrink-0">
-                    <div>
-                        <div class="text-2xl sm:text-3xl font-black text-indigo-400" id="statTotalEvents">0</div>
-                        <div class="text-[11px] text-gray-300 font-semibold uppercase tracking-wider">Toplam Olay</div>
-                    </div>
-                    <div class="border-x border-white/10 px-3">
-                        <div class="text-2xl sm:text-3xl font-black text-purple-400" id="statTotalCategories">0</div>
-                        <div class="text-[11px] text-gray-300 font-semibold uppercase tracking-wider">Başlık</div>
-                    </div>
-                    <div>
-                        <div class="text-2xl sm:text-3xl font-black text-pink-400" id="statTotalReactions">0</div>
-                        <div class="text-[11px] text-gray-300 font-semibold uppercase tracking-wider">Reaksiyon</div>
-                    </div>
+                <div class="stat-item">
+                    <h3 id="stat-categories">0</h3>
+                    <p>Başlık</p>
+                </div>
+                <div class="stat-item">
+                    <h3 id="stat-reactions">0</h3>
+                    <p>Reaksiyon</p>
                 </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            
-            <!-- Left Sidebar: Filters & Categories -->
-            <aside class="lg:col-span-1 space-y-6">
-                
-                <!-- Search Box -->
-                <div class="glass-panel p-4 rounded-2xl">
-                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Olay Arama</label>
-                    <div class="relative">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-gray-500 text-sm"></i>
-                        <input type="text" id="searchInput" oninput="handleFilterChange()" placeholder="İçerik, başlık veya isim ara..." class="w-full bg-gray-900/90 border border-gray-700/70 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition">
-                    </div>
+        <div class="sidebar">
+            <div class="card">
+                <div class="card-title">
+                    <span># BAŞLIKLAR</span>
+                    <button style="background:none; border:none; color:var(--primary); cursor:pointer; font-weight:700;" onclick="openCategoryModal()">+ Yeni</button>
                 </div>
-
-                <!-- Categories List (Başlıklar) -->
-                <div class="glass-panel p-5 rounded-2xl">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-bold text-sm uppercase tracking-wider text-gray-300 flex items-center space-x-2">
-                            <i class="fa-solid fa-hashtag text-indigo-400"></i>
-                            <span>Başlıklar</span>
-                        </h3>
-                        <button onclick="openNewCategoryModal()" class="text-xs text-indigo-400 hover:text-indigo-300 font-medium flex items-center space-x-1">
-                            <i class="fa-solid fa-plus"></i>
-                            <span>Yeni</span>
-                        </button>
-                    </div>
-
-                    <div class="space-y-1.5 max-h-72 overflow-y-auto pr-1" id="categoryListContainer">
-                        <!-- Category items rendered here -->
-                        <div class="animate-pulse space-y-2">
-                            <div class="h-8 bg-gray-800 rounded-xl"></div>
-                            <div class="h-8 bg-gray-800 rounded-xl"></div>
-                            <div class="h-8 bg-gray-800 rounded-xl"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Authors Filter -->
-                <div class="glass-panel p-5 rounded-2xl">
-                    <h3 class="font-bold text-sm uppercase tracking-wider text-gray-300 mb-3 flex items-center space-x-2">
-                        <i class="fa-solid fa-users text-purple-400"></i>
-                        <span>Aga Kadrosu</span>
-                    </h3>
-                    <div class="flex flex-wrap gap-1.5" id="authorListContainer">
-                        <!-- Author filter tags rendered here -->
-                    </div>
-                </div>
-
-            </aside>
-
-            <!-- Main Stream / Timeline -->
-            <section class="lg:col-span-3 space-y-6">
-                
-                <!-- Filter Bar / Sorting -->
-                <div class="glass-panel p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4">
-                    <div class="flex items-center space-x-2 text-sm text-gray-300 font-medium" id="activeFilterBadge">
-                        <span>Tüm Olaylar Gösteriliyor</span>
-                    </div>
-
-                    <div class="flex items-center space-x-3 text-xs">
-                        <span class="text-gray-400">Sıralama:</span>
-                        <select id="sortSelect" onchange="handleFilterChange()" class="bg-gray-900 border border-gray-700 text-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500">
-                            <option value="newest">En Yeniler Önce</option>
-                            <option value="oldest">En Eskiler Önce</option>
-                            <option value="mostReacted">En Çok Reaksiyon Alanlar</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Events Stream Container -->
-                <div id="eventsContainer" class="space-y-5">
-                    <!-- Event Cards loaded here dynamically -->
-                    <div class="glass-panel p-8 rounded-3xl text-center space-y-3">
-                        <div class="inline-block p-4 rounded-full bg-indigo-500/10 text-indigo-400">
-                            <i class="fa-solid fa-spinner fa-spin text-2xl"></i>
-                        </div>
-                        <p class="text-gray-400 text-sm">Olaylar veritabanından yükleniyor...</p>
-                    </div>
-                </div>
-
-            </section>
-
+                <ul class="category-list" id="categoryList">
+                    <li class="category-item active" onclick="filterCategory('all')">
+                        <span># Hepsi</span>
+                        <span id="count-all">0</span>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </main>
 
-    <!-- NEW EVENT MODAL -->
-    <div id="newEventModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-        <div class="glass-panel w-full max-w-xl rounded-3xl p-6 sm:p-8 space-y-6 relative border border-indigo-500/30 shadow-2xl max-h-[90vh] overflow-y-auto">
-            
-            <div class="flex items-center justify-between border-b border-gray-800 pb-4">
-                <div class="flex items-center space-x-3">
-                    <div class="p-2.5 rounded-xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/30">
-                        <i class="fa-solid fa-pen-nib text-lg"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-white">Yeni Olay Kaydet</h3>
-                        <p class="text-xs text-gray-400">Topluluk tarihine yeni bir sayfa ekle</p>
-                    </div>
-                </div>
-                <button onclick="closeNewEventModal()" class="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-gray-800 transition">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
+        <div class="feed-section">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="İçerik, başlık veya isim ara..." oninput="handleSearch()">
             </div>
 
-            <form id="newEventForm" onsubmit="handleCreateEvent(event)" class="space-y-4">
-                
-                <div>
-                    <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">Olay Başlığı <span class="text-red-400">*</span></label>
-                    <input type="text" id="eventTitle" required placeholder="Örn: Ahmet'in Discord'da Kulaklığı Unutup Ağlaması" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition">
+            <div id="eventsFeed">
+                <div style="text-align:center; padding:3rem; color:var(--text-muted);">
+                    Yükleniyor...
                 </div>
+            </div>
+        </div>
+    </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">Kategori / Başlık <span class="text-red-400">*</span></label>
-                        <select id="eventCategory" required class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition">
-                            <!-- Populated dynamically -->
-                        </select>
+    <!-- Modal: Olay Ekle -->
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Yeni Olay / Travma Kaydet</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="eventForm" onsubmit="saveEvent(event)">
+                <div class="form-group">
+                    <label>Adın / Takma Adın</label>
+                    <input type="text" id="authorInput" placeholder="Örn: Agalardan Biri" required>
+                </div>
+                <div class="form-group">
+                    <label>Başlık / Konu</label>
+                    <select id="categorySelect" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Olay Başlığı</label>
+                    <input type="text" id="titleInput" placeholder="Neler oldu?" required>
+                </div>
+                <div class="form-group">
+                    <label>Olayın Detayları / Travma Hikayesi</label>
+                    <textarea id="contentInput" rows="4" placeholder="Tüm detaylarıyla anlat..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Fotoğraf / Görsel Ekle (Opsiyonel)</label>
+                    <label class="file-upload-btn">
+                        <i class="fa-solid fa-image"></i> Görsel Seç
+                        <input type="file" id="imageInput" accept="image/*" style="display:none;" onchange="handleImagePreview(event)">
+                    </label>
+                    <div class="preview-img-container" id="previewContainer">
+                        <img id="previewImg" src="" alt="Önizleme">
                     </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">Yazan Aga (Adınız) <span class="text-red-400">*</span></label>
-                        <input type="text" id="eventAuthor" required placeholder="Nick'in veya Adın" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition">
-                    </div>
                 </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">Olayın Tarihi / Zamanı</label>
-                    <input type="datetime-local" id="eventOccurredAt" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">Olay Modu / Etiketi</label>
-                    <div class="flex flex-wrap gap-2" id="moodSelector">
-                        <button type="button" onclick="selectMood('🔥 Efsane')" class="mood-btn px-3 py-1.5 rounded-lg border border-gray-700 text-xs text-gray-300 hover:border-indigo-500">🔥 Efsane</button>
-                        <button type="button" onclick="selectMood('😂 Komik')" class="mood-btn px-3 py-1.5 rounded-lg border border-gray-700 text-xs text-gray-300 hover:border-indigo-500">😂 Komik</button>
-                        <button type="button" onclick="selectMood('💀 Utanç')" class="mood-btn px-3 py-1.5 rounded-lg border border-gray-700 text-xs text-gray-300 hover:border-indigo-500">💀 Utanç</button>
-                        <button type="button" onclick="selectMood('🎮 Gaming')" class="mood-btn px-3 py-1.5 rounded-lg border border-gray-700 text-xs text-gray-300 hover:border-indigo-500">🎮 Gaming</button>
-                        <button type="button" onclick="selectMood('⚠️ Kaos')" class="mood-btn px-3 py-1.5 rounded-lg border border-gray-700 text-xs text-gray-300 hover:border-indigo-500">⚠️ Kaos</button>
-                    </div>
-                    <input type="hidden" id="selectedMood" value="🔥 Efsane">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">Olayın Detaylı Anlatımı <span class="text-red-400">*</span></label>
-                    <textarea id="eventDescription" rows="5" required placeholder="Olay tam olarak nasıl gerçekleşti? Kimler vardı, ne söylendi? Detaylıca yaz ki unutulmasın..." class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500 transition leading-relaxed"></textarea>
-                </div>
-
-                <div class="pt-2 flex justify-end space-x-3">
-                    <button type="button" onclick="closeNewEventModal()" class="px-5 py-2.5 rounded-xl border border-gray-700 text-gray-300 text-sm hover:bg-gray-800 transition">İptal</button>
-                    <button type="submit" id="submitEventBtn" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-purple-600 text-white font-semibold text-sm hover:opacity-90 transition flex items-center space-x-2">
-                        <i class="fa-solid fa-paper-plane"></i>
-                        <span>Olayı Kaydet</span>
-                    </button>
-                </div>
+                <button type="submit" class="btn" style="width:100%; justify-content:center; margin-top:1rem;">Buluta Kaydet</button>
             </form>
         </div>
     </div>
 
-    <!-- NEW CATEGORY MODAL -->
-    <div id="newCategoryModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-        <div class="glass-panel w-full max-w-md rounded-3xl p-6 space-y-5 border border-purple-500/30 shadow-2xl">
-            <div class="flex items-center justify-between border-b border-gray-800 pb-3">
-                <h3 class="text-lg font-bold text-white flex items-center space-x-2">
-                    <i class="fa-solid fa-hashtag text-purple-400"></i>
-                    <span>Yeni Başlık / Kategori Ekle</span>
-                </h3>
-                <button onclick="closeNewCategoryModal()" class="text-gray-400 hover:text-white p-1 rounded-lg">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
+    <!-- Modal: Başlık Ekle -->
+    <div class="modal" id="categoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Yeni Başlık Oluştur</h3>
+                <button class="close-btn" onclick="closeCategoryModal()">&times;</button>
             </div>
-
-            <form onsubmit="handleCreateCategory(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">Başlık Adı</label>
-                    <input type="text" id="categoryTitle" required placeholder="Örn: Gece 3 Muhabbetleri" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500">
+            <form onsubmit="saveCategory(event)">
+                <div class="form-group">
+                    <label>Başlık Adı</label>
+                    <input type="text" id="newCategoryInput" placeholder="Örn: Oyun Dramaları" required>
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">İkon (Emoji veya Metin)</label>
-                    <input type="text" id="categoryIcon" maxlength="4" placeholder="🔮" value="📌" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500">
-                </div>
-                <div class="flex justify-end space-x-3 pt-2">
-                    <button type="button" onclick="closeNewCategoryModal()" class="px-4 py-2 rounded-xl border border-gray-700 text-gray-300 text-sm">İptal</button>
-                    <button type="submit" class="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm">Ekle</button>
-                </div>
+                <button type="submit" class="btn" style="width:100%; justify-content:center;">Başlık Ekle</button>
             </form>
         </div>
     </div>
 
-    <!-- DEPLOYMENT INSTRUCTIONS MODAL -->
-    <div id="deployModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-        <div class="glass-panel w-full max-w-2xl rounded-3xl p-6 sm:p-8 space-y-6 border border-emerald-500/30 shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div class="flex items-center justify-between border-b border-gray-800 pb-3">
-                <div class="flex items-center space-x-3">
-                    <div class="p-2 rounded-lg bg-emerald-500/20 text-emerald-400">
-                        <i class="fa-solid fa-rocket text-xl"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-white">GitHub & Vercel Dağıtım Rehberi</h3>
-                </div>
-                <button onclick="toggleDeployGuide()" class="text-gray-400 hover:text-white p-1">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
-
-            <div class="space-y-4 text-sm text-gray-300 leading-relaxed">
-                <p>Bu siteyi kendi alan adınızda veya ücretsiz Vercel linkinizde yayınlamak için aşağıdaki adımları takip edin:</p>
-                
-                <ol class="list-decimal list-inside space-y-2.5 bg-gray-900/80 p-4 rounded-xl border border-gray-800">
-                    <li><strong class="text-white">GitHub Deposu Açın:</strong> GitHub'da yeni bir repository (örn: <code class="text-indigo-300">crushers-agalar-lore</code>) oluşturun.</li>
-                    <li><strong class="text-white">index.html Dosyası Ekle:</strong> Bu sayfanın tüm kodunu kopyalayın ve depoda <code class="text-indigo-300">index.html</code> olarak kaydedin.</li>
-                    <li><strong class="text-white">Vercel'e Bağlayın:</strong> <a href="https://vercel.com" target="_blank" class="text-emerald-400 underline">Vercel.com</a> adresine GitHub hesabınızla giriş yapın, "Add New Project" seçip hiyerarşideki depoyu seçin.</li>
-                    <li><strong class="text-white">Deploy Et:</strong> Herhangi bir özel ayar yapmadan "Deploy" butonuna basın. Siteniz 10 saniye içinde canlıya alınacaktır!</li>
-                </ol>
-
-                <div class="p-4 rounded-xl bg-indigo-950/40 border border-indigo-500/30 text-xs text-indigo-200">
-                    <i class="fa-solid fa-circle-info mr-1 text-indigo-400"></i>
-                    <strong>Veritabanı Notu:</strong> Uygulama dahili olarak Firebase bulut veritabanına bağlıdır. Deploy ettikten sonra bile gruptaki herkesin yazdığı veriler ortak bulut sunucusunda anlık senkronize olmaya devam eder.
-                </div>
-            </div>
-
-            <div class="flex justify-end">
-                <button onclick="toggleDeployGuide()" class="px-5 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-white text-sm font-medium">Anladım</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Notification Toast -->
-    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition duration-300 pointer-events-none">
-        <div class="bg-gray-900 border border-indigo-500/50 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center space-x-3">
-            <i class="fa-solid fa-circle-check text-emerald-400" id="toastIcon"></i>
-            <span class="text-sm font-medium" id="toastMessage">İşlem başarılı!</span>
-        </div>
-    </div>
-
-    <!-- Firebase Global Initialization JS (Using Firebase CDN v11) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Global variables provided by environment or default public fallbacks for this demo
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'crushers-agalar-default';
-        
-        // Configuration block fallback
-        let firebaseConfig = {
-            apiKey: "AIzaSyDummyKeyForCrushersAgalarClientPublic",
-            authDomain: "crushers-agalar.firebaseapp.com",
-            projectId: "crushers-agalar",
-            storageBucket: "crushers-agalar.appspot.com",
-            messagingSenderId: "1234567890",
-            appId: "1:1234567890:web:abcdef123456"
+    <script>
+        // FIREBASE CONFIGURATION
+        const firebaseConfig = {
+            apiKey: "AIzaSyCwN2Ij9zwG2JFxuxHudvOmSl1peH2ClWo",
+            authDomain: "crushersagalarlore.firebaseapp.com",
+            projectId: "crushersagalarlore",
+            storageBucket: "crushersagalarlore.firebasestorage.app",
+            messagingSenderId: "163348435559",
+            appId: "1:163348435559:web:e340b865fb9ffb3b323ac2",
+            measurementId: "G-ETRQV447CS"
         };
 
-        if (typeof __firebase_config !== 'undefined') {
-            try {
-                firebaseConfig = JSON.parse(__firebase_config);
-            } catch (e) {
-                console.log("Using standard database layout.");
-            }
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        let categories = ["Oyun Geceleri", "Komik Gaflar", "Büyük Dramalar", "Unutulmaz Anlar"];
+        let events = [];
+        let activeCategory = 'all';
+        let currentImageData = "";
+
+        function setTheme(themeName) {
+            document.documentElement.setAttribute('data-theme', themeName);
+            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.theme-${themeName}`).classList.add('active');
         }
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-
-        // App state
-        let currentEvents = [];
-        let currentCategories = [
-            { id: 'cat-1', name: 'Efsane Gaflar', icon: '🗣️' },
-            { id: 'cat-2', name: 'Oyun Geceleri', icon: '🎮' },
-            { id: 'cat-3', name: 'Komik Anılar', icon: '😂' },
-            { id: 'cat-4', name: 'Günün Olayı', icon: '🔥' },
-            { id: 'cat-5', name: 'Gece Muhabbetleri', icon: '🌙' }
-        ];
-        
-        let selectedCategoryFilter = null;
-        let selectedAuthorFilter = null;
-        let currentUser = null;
-
-        // Path helpers
-        const eventsCollectionPath = collection(db, 'artifacts', appId, 'public', 'data', 'events');
-        const categoriesCollectionPath = collection(db, 'artifacts', appId, 'public', 'data', 'categories');
-
-        // Initial Auth Setup
-        async function initAuth() {
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (err) {
-                console.warn("Auth initializing fallback mode...", err);
-            }
-        }
-
-        onAuthStateChanged(auth, (user) => {
-            currentUser = user;
-            if (user) {
-                subscribeToCategories();
-                subscribeToEvents();
-            }
-        });
-
-        // Realtime Categories Listener
-        function subscribeToCategories() {
-            onSnapshot(categoriesCollectionPath, (snapshot) => {
-                if (!snapshot.empty) {
-                    const fetchedCats = [];
-                    snapshot.forEach(docSnap => {
-                        fetchedCats.push({ id: docSnap.id, ...docSnap.data() });
-                    });
-                    currentCategories = fetchedCats;
-                } else {
-                    // Seed default categories if empty
-                    seedDefaultCategories();
-                }
-                renderCategories();
-                populateCategoryDropdown();
-            }, (error) => {
-                console.error("Error fetching categories: ", error);
-                renderCategories();
-                populateCategoryDropdown();
-            });
-        }
-
-        async function seedDefaultCategories() {
-            if (!auth.currentUser) return;
-            for (const cat of currentCategories) {
-                try {
-                    await addDoc(categoriesCollectionPath, {
-                        name: cat.name,
-                        icon: cat.icon,
-                        createdAt: serverTimestamp()
-                    });
-                } catch(e) {}
-            }
-        }
-
-        // Realtime Events Listener
-        function subscribeToEvents() {
-            onSnapshot(eventsCollectionPath, (snapshot) => {
-                const events = [];
-                snapshot.forEach(docSnap => {
-                    events.push({ id: docSnap.id, ...docSnap.data() });
+        // Firestore Realtime Listener
+        function initRealtimeData() {
+            db.collection("events").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+                events = [];
+                snapshot.forEach((doc) => {
+                    events.push({ id: doc.id, ...doc.data() });
                 });
-                currentEvents = events;
                 renderEvents();
-                renderAuthors();
                 updateStats();
-            }, (error) => {
-                console.error("Error fetching events: ", error);
-                // Render empty or demo state if error occurs
-                renderEvents();
-            });
-        }
-
-        // Render Categories in Sidebar
-        window.renderCategories = function() {
-            const container = document.getElementById('categoryListContainer');
-            if (!container) return;
-
-            let html = `
-                <button onclick="filterByCategory(null)" class="w-full text-left px-3 py-2 rounded-xl text-xs font-medium transition flex items-center justify-between ${selectedCategoryFilter === null ? 'bg-indigo-600/30 text-indigo-200 border border-indigo-500/40' : 'text-gray-400 hover:bg-gray-800/60 hover:text-gray-200'}">
-                    <span class="flex items-center space-x-2">
-                        <span>🌟</span>
-                        <span>Tüm Başlıklar</span>
-                    </span>
-                    <span class="text-[10px] bg-gray-800 px-2 py-0.5 rounded-full text-gray-400">${currentEvents.length}</span>
-                </button>
-            `;
-
-            currentCategories.forEach(cat => {
-                const count = currentEvents.filter(e => e.category === cat.name).length;
-                const isSelected = selectedCategoryFilter === cat.name;
-                html += `
-                    <button onclick="filterByCategory('${cat.name}')" class="w-full text-left px-3 py-2 rounded-xl text-xs font-medium transition flex items-center justify-between ${isSelected ? 'bg-indigo-600/30 text-indigo-200 border border-indigo-500/40' : 'text-gray-400 hover:bg-gray-800/60 hover:text-gray-200'}">
-                        <span class="flex items-center space-x-2 truncate">
-                            <span>${cat.icon || '📌'}</span>
-                            <span class="truncate">${cat.name}</span>
-                        </span>
-                        <span class="text-[10px] bg-gray-800 px-2 py-0.5 rounded-full text-gray-400 shrink-0">${count}</span>
-                    </button>
-                `;
             });
 
-            container.innerHTML = html;
-        };
-
-        // Populate Categories in Create Modal Dropdown
-        function populateCategoryDropdown() {
-            const dropdown = document.getElementById('eventCategory');
-            if (!dropdown) return;
-            dropdown.innerHTML = currentCategories.map(cat => `<option value="${cat.name}">${cat.icon || '📌'} ${cat.name}</option>`).join('');
-        }
-
-        // Render Authors Filter Tag Cloud
-        function renderAuthors() {
-            const container = document.getElementById('authorListContainer');
-            if (!container) return;
-
-            const authorsMap = {};
-            currentEvents.forEach(e => {
-                if (e.author) {
-                    authorsMap[e.author] = (authorsMap[e.author] || 0) + 1;
+            db.collection("categories").onSnapshot((snapshot) => {
+                if (!snapshot.empty) {
+                    let catList = [];
+                    snapshot.forEach((doc) => catList.push(doc.data().name));
+                    categories = catList;
                 }
+                renderCategories();
+            });
+        }
+
+        function handleImagePreview(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    currentImageData = evt.target.result;
+                    document.getElementById('previewImg').src = currentImageData;
+                    document.getElementById('previewContainer').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function renderCategories() {
+            const listEl = document.getElementById('categoryList');
+            const selectEl = document.getElementById('categorySelect');
+            
+            listEl.innerHTML = `
+                <li class="category-item ${activeCategory === 'all' ? 'active' : ''}" onclick="filterCategory('all')">
+                    <span># Hepsi</span>
+                    <span>${events.length}</span>
+                </li>
+            `;
+            
+            selectEl.innerHTML = '';
+
+            categories.forEach(cat => {
+                const count = events.filter(e => e.category === cat).length;
+                listEl.innerHTML += `
+                    <li class="category-item ${activeCategory === cat ? 'active' : ''}" onclick="filterCategory('${cat}')">
+                        <span># ${cat}</span>
+                        <span>${count}</span>
+                    </li>
+                `;
+
+                selectEl.innerHTML += `<option value="${cat}">${cat}</option>`;
+            });
+        }
+
+        function renderEvents() {
+            const feed = document.getElementById('eventsFeed');
+            const query = document.getElementById('searchInput').value.toLowerCase();
+
+            let filtered = events.filter(e => {
+                const matchesCat = activeCategory === 'all' || e.category === activeCategory;
+                const matchesSearch = e.title.toLowerCase().includes(query) || 
+                                      e.content.toLowerCase().includes(query) || 
+                                      e.author.toLowerCase().includes(query);
+                return matchesCat && matchesSearch;
             });
 
-            const authors = Object.keys(authorsMap);
-            if (authors.length === 0) {
-                container.innerHTML = `<span class="text-xs text-gray-500 italic">Henüz kimse yazmadı</span>`;
+            if(filtered.length === 0) {
+                feed.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-muted);">Henüz kaydolmuş bir olay yok. İlkini sen ekle!</div>`;
                 return;
             }
 
-            let html = authors.map(author => {
-                const isSelected = selectedAuthorFilter === author;
-                return `
-                    <button onclick="filterByAuthor('${author}')" class="px-2.5 py-1 rounded-lg text-xs font-medium transition ${isSelected ? 'bg-purple-600 text-white' : 'bg-gray-800/80 text-gray-400 hover:bg-gray-700 hover:text-gray-200'}">
-                        ${author} (${authorsMap[author]})
-                    </button>
-                `;
-            }).join('');
-
-            container.innerHTML = html;
-        }
-
-        // Render Events Feed
-        window.renderEvents = function() {
-            const container = document.getElementById('eventsContainer');
-            if (!container) return;
-
-            let filtered = [...currentEvents];
-
-            // Category filter
-            if (selectedCategoryFilter) {
-                filtered = filtered.filter(e => e.category === selectedCategoryFilter);
-            }
-
-            // Author filter
-            if (selectedAuthorFilter) {
-                filtered = filtered.filter(e => e.author === selectedAuthorFilter);
-            }
-
-            // Search Filter
-            const searchVal = document.getElementById('searchInput')?.value?.toLowerCase() || '';
-            if (searchVal) {
-                filtered = filtered.filter(e => 
-                    (e.title && e.title.toLowerCase().includes(searchVal)) ||
-                    (e.description && e.description.toLowerCase().includes(searchVal)) ||
-                    (e.author && e.author.toLowerCase().includes(searchVal)) ||
-                    (e.category && e.category.toLowerCase().includes(searchVal))
-                );
-            }
-
-            // Sort
-            const sortVal = document.getElementById('sortSelect')?.value || 'newest';
-            filtered.sort((a, b) => {
-                if (sortVal === 'newest') {
-                    return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0);
-                } else if (sortVal === 'oldest') {
-                    return (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0);
-                } else if (sortVal === 'mostReacted') {
-                    const reactionsA = Object.values(a.reactions || {}).reduce((acc, curr) => acc + curr, 0);
-                    const reactionsB = Object.values(b.reactions || {}).reduce((acc, curr) => acc + curr, 0);
-                    return reactionsB - reactionsA;
-                }
-                return 0;
-            });
-
-            // Update Header Status Indicator
-            const badge = document.getElementById('activeFilterBadge');
-            if (badge) {
-                let badgeText = "Tüm Olaylar";
-                if (selectedCategoryFilter) badgeText = `Kategori: ${selectedCategoryFilter}`;
-                if (selectedAuthorFilter) badgeText = `Yazar: ${selectedAuthorFilter}`;
-                if (searchVal) badgeText = `Arama: "${searchVal}"`;
-                badge.innerHTML = `<span class="text-indigo-400 font-semibold">${badgeText}</span> <span class="text-gray-500">(${filtered.length} Olay)</span>`;
-            }
-
-            if (filtered.length === 0) {
-                container.innerHTML = `
-                    <div class="glass-panel p-12 rounded-3xl text-center space-y-4">
-                        <div class="w-16 h-16 mx-auto rounded-full bg-gray-800/80 flex items-center justify-center text-gray-500 text-2xl">
-                            <i class="fa-solid fa-ghost"></i>
+            feed.innerHTML = filtered.map(e => `
+                <div class="event-card">
+                    <div class="event-header">
+                        <div class="event-meta">
+                            <div class="author-avatar">${e.author.charAt(0).toUpperCase()}</div>
+                            <div class="author-info">
+                                <h4>${escapeHtml(e.author)}</h4>
+                                <span>${e.date || 'Tarih yok'}</span>
+                            </div>
                         </div>
-                        <h4 class="text-lg font-bold text-gray-300">Henüz Olay Bulunamadı</h4>
-                        <p class="text-xs text-gray-500 max-w-sm mx-auto">Bu kategoride veya kriterde henüz olay kaydedilmemiş. İlk olayı sen yazarak lore'a yön ver!</p>
-                        <button onclick="openNewEventModal()" class="inline-flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs px-4 py-2 rounded-xl transition">
-                            <i class="fa-solid fa-plus"></i>
-                            <span>Olay Ekle</span>
+                        <span class="category-badge"># ${escapeHtml(e.category)}</span>
+                    </div>
+                    <div class="event-title">${escapeHtml(e.title)}</div>
+                    <div class="event-content">${escapeHtml(e.content)}</div>
+                    ${e.image ? `<img src="${e.image}" class="event-image" alt="Olay Görseli">` : ''}
+                    <div class="event-footer">
+                        <button class="reaction-btn" onclick="react('${e.id}', 'fire')">
+                            🔥 <span>${e.reactions?.fire || 0}</span>
+                        </button>
+                        <button class="reaction-btn" onclick="react('${e.id}', 'skull')">
+                            💀 <span>${e.reactions?.skull || 0}</span>
+                        </button>
+                        <button class="reaction-btn" onclick="react('${e.id}', 'laugh')">
+                            😂 <span>${e.reactions?.laugh || 0}</span>
                         </button>
                     </div>
-                `;
-                return;
-            }
+                </div>
+            `).join('');
+        }
 
-            container.innerHTML = filtered.map(event => {
-                const dateStr = formatDate(event.occurredAt || event.createdAt);
-                const reactions = event.reactions || { fire: 0, laugh: 0, skull: 0, crown: 0 };
-
-                return `
-                    <article class="glass-panel glass-panel-hover p-6 rounded-3xl transition duration-300 relative group border border-gray-800/80">
-                        <!-- Top Metadata -->
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                            <div class="flex items-center space-x-2">
-                                <span class="px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-medium flex items-center space-x-1">
-                                    <i class="fa-solid fa-hashtag text-[10px]"></i>
-                                    <span>${escapeHtml(event.category || 'Genel')}</span>
-                                </span>
-                                ${event.mood ? `
-                                    <span class="px-2.5 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">
-                                        ${escapeHtml(event.mood)}
-                                    </span>
-                                ` : ''}
-                            </div>
-                            <span class="text-xs text-gray-500 font-medium flex items-center space-x-1">
-                                <i class="fa-regular fa-clock text-gray-600"></i>
-                                <span>${dateStr}</span>
-                            </span>
-                        </div>
-
-                        <!-- Title -->
-                        <h3 class="text-lg sm:text-xl font-bold text-white mb-2 leading-snug group-hover:text-indigo-200 transition">
-                            ${escapeHtml(event.title)}
-                        </h3>
-
-                        <!-- Description -->
-                        <p class="text-gray-300 text-sm leading-relaxed mb-4 whitespace-pre-line font-normal">
-                            ${escapeHtml(event.description)}
-                        </p>
-
-                        <!-- Footer / Author & Reactions -->
-                        <div class="pt-4 border-t border-gray-800/60 flex flex-wrap items-center justify-between gap-4">
-                            <!-- Author -->
-                            <div class="flex items-center space-x-2.5">
-                                <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center text-xs font-bold text-white uppercase shadow">
-                                    ${(event.author || 'A').charAt(0)}
-                                </div>
-                                <div class="text-xs">
-                                    <span class="text-gray-400">Yazan:</span>
-                                    <span class="text-gray-200 font-semibold cursor-pointer hover:underline" onclick="filterByAuthor('${escapeHtml(event.author)}')">${escapeHtml(event.author || 'Anonim Aga')}</span>
-                                </div>
-                            </div>
-
-                            <!-- Reaction Bar -->
-                            <div class="flex items-center space-x-1.5 sm:space-x-2">
-                                <button onclick="reactToEvent('${event.id}', 'fire')" class="px-2.5 py-1.5 rounded-xl bg-gray-800/80 hover:bg-orange-500/20 border border-gray-700/60 hover:border-orange-500/50 text-xs text-gray-300 transition flex items-center space-x-1.5 active:scale-90">
-                                    <span>🔥</span>
-                                    <span class="font-bold text-orange-400">${reactions.fire || 0}</span>
-                                </button>
-
-                                <button onclick="reactToEvent('${event.id}', 'laugh')" class="px-2.5 py-1.5 rounded-xl bg-gray-800/80 hover:bg-yellow-500/20 border border-gray-700/60 hover:border-yellow-500/50 text-xs text-gray-300 transition flex items-center space-x-1.5 active:scale-90">
-                                    <span>😂</span>
-                                    <span class="font-bold text-yellow-400">${reactions.laugh || 0}</span>
-                                </button>
-
-                                <button onclick="reactToEvent('${event.id}', 'skull')" class="px-2.5 py-1.5 rounded-xl bg-gray-800/80 hover:bg-purple-500/20 border border-gray-700/60 hover:border-purple-500/50 text-xs text-gray-300 transition flex items-center space-x-1.5 active:scale-90">
-                                    <span>💀</span>
-                                    <span class="font-bold text-purple-400">${reactions.skull || 0}</span>
-                                </button>
-
-                                <button onclick="reactToEvent('${event.id}', 'crown')" class="px-2.5 py-1.5 rounded-xl bg-gray-800/80 hover:bg-amber-500/20 border border-gray-700/60 hover:border-amber-500/50 text-xs text-gray-300 transition flex items-center space-x-1.5 active:scale-90">
-                                    <span>👑</span>
-                                    <span class="font-bold text-amber-400">${reactions.crown || 0}</span>
-                                </button>
-                            </div>
-                        </div>
-                    </article>
-                `;
-            }).join('');
-        };
-
-        // Add Event Action
-        window.handleCreateEvent = async function(e) {
-            e.preventDefault();
-            if (!auth.currentUser) return;
-
-            const submitBtn = document.getElementById('submitEventBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Kaydediliyor...</span>`;
-
-            const title = document.getElementById('eventTitle').value.trim();
-            const category = document.getElementById('eventCategory').value;
-            const author = document.getElementById('eventAuthor').value.trim();
-            const occurredAtRaw = document.getElementById('eventOccurredAt').value;
-            const mood = document.getElementById('selectedMood').value;
-            const description = document.getElementById('eventDescription').value.trim();
-
-            try {
-                await addDoc(eventsCollectionPath, {
-                    title,
-                    category,
-                    author,
-                    occurredAt: occurredAtRaw ? new Date(occurredAtRaw).toISOString() : new Date().toISOString(),
-                    mood,
-                    description,
-                    createdAt: serverTimestamp(),
-                    reactions: { fire: 0, laugh: 0, skull: 0, crown: 0 }
-                });
-
-                showToast("Olay başarıyla kaydedildi! 🔥");
-                closeNewEventModal();
-                document.getElementById('newEventForm').reset();
-            } catch (err) {
-                console.error("Event saving error:", err);
-                showToast("Bir hata oluştu, tekrar dene.");
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span>Olayı Kaydet</span>`;
-            }
-        };
-
-        // Add Category Action
-        window.handleCreateCategory = async function(e) {
-            e.preventDefault();
-            if (!auth.currentUser) return;
-
-            const name = document.getElementById('categoryTitle').value.trim();
-            const icon = document.getElementById('categoryIcon').value.trim() || '📌';
-
-            try {
-                await addDoc(categoriesCollectionPath, {
-                    name,
-                    icon,
-                    createdAt: serverTimestamp()
-                });
-                showToast("Yeni başlık eklendi! 🚀");
-                closeNewCategoryModal();
-                document.getElementById('categoryTitle').value = '';
-            } catch (err) {
-                console.error("Category saving error:", err);
-            }
-        };
-
-        // Reaction Action
-        window.reactToEvent = async function(eventId, reactionType) {
-            if (!auth.currentUser) return;
-            try {
-                const eventRef = doc(db, 'artifacts', appId, 'public', 'data', 'events', eventId);
-                await updateDoc(eventRef, {
-                    [`reactions.${reactionType}`]: increment(1)
-                });
-            } catch (err) {
-                console.error("Reaction failed:", err);
-            }
-        };
-
-        // Stats Counter
         function updateStats() {
-            document.getElementById('statTotalEvents').innerText = currentEvents.length;
-            document.getElementById('statTotalCategories').innerText = currentCategories.length;
+            document.getElementById('stat-total').innerText = events.length;
+            document.getElementById('stat-categories').innerText = categories.length;
             
             let totalReactions = 0;
-            currentEvents.forEach(e => {
-                if (e.reactions) {
-                    totalReactions += Object.values(e.reactions).reduce((a, b) => a + b, 0);
+            events.forEach(e => {
+                if(e.reactions) {
+                    totalReactions += (e.reactions.fire || 0) + (e.reactions.skull || 0) + (e.reactions.laugh || 0);
                 }
             });
-            document.getElementById('statTotalReactions').innerText = totalReactions;
+            document.getElementById('stat-reactions').innerText = totalReactions;
+            renderCategories();
         }
 
-        // Global Filtering handlers
-        window.filterByCategory = function(categoryName) {
-            selectedCategoryFilter = categoryName;
-            renderCategories();
-            renderEvents();
-        };
+        function saveEvent(e) {
+            e.preventDefault();
+            const author = document.getElementById('authorInput').value;
+            const category = document.getElementById('categorySelect').value;
+            const title = document.getElementById('titleInput').value;
+            const content = document.getElementById('contentInput').value;
 
-        window.filterByAuthor = function(authorName) {
-            selectedAuthorFilter = selectedAuthorFilter === authorName ? null : authorName;
-            renderAuthors();
-            renderEvents();
-        };
+            const newEvent = {
+                author,
+                category,
+                title,
+                content,
+                image: currentImageData || null,
+                date: new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute:'2-digit' }),
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                reactions: { fire: 0, skull: 0, laugh: 0 }
+            };
 
-        window.handleFilterChange = function() {
-            renderEvents();
-        };
+            db.collection("events").add(newEvent).then(() => {
+                closeModal();
+                document.getElementById('eventForm').reset();
+                currentImageData = "";
+                document.getElementById('previewContainer').style.display = 'none';
+            });
+        }
 
-        window.resetFilters = function() {
-            selectedCategoryFilter = null;
-            selectedAuthorFilter = null;
-            document.getElementById('searchInput').value = '';
-            renderCategories();
-            renderAuthors();
-            renderEvents();
-        };
-
-        // Utility Helpers
-        function formatDate(dateVal) {
-            if (!dateVal) return 'Tarih Belirtilmedi';
-            let d;
-            if (dateVal.seconds) {
-                d = new Date(dateVal.seconds * 1000);
-            } else {
-                d = new Date(dateVal);
+        function saveCategory(e) {
+            e.preventDefault();
+            const name = document.getElementById('newCategoryInput').value.trim();
+            if(name && !categories.includes(name)) {
+                db.collection("categories").add({ name }).then(() => {
+                    closeCategoryModal();
+                    document.getElementById('newCategoryInput').value = '';
+                });
             }
-            if (isNaN(d.getTime())) return 'Tarih Belirtilmedi';
-            return d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
         }
 
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/&/g, "&amp;")
-                      .replace(/</g, "&lt;")
-                      .replace(/>/g, "&gt;")
-                      .replace(/"/g, "&quot;")
-                      .replace(/'/g, "&#039;");
-        }
-        // Initialize Theme Function
-        window.setTheme = function(themeName) {
-            document.body.className = `theme-${themeName} min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white`;
-            localStorage.setItem('agalar_theme', themeName);
-        };
-
-        // Load saved theme on boot
-        const savedTheme = localStorage.getItem('agalar_theme') || 'siyah';
-        setTheme(savedTheme);
-
-        // Initialize Firebase execution on start
-        initAuth();
-    </script>
-
-    <!-- Modal Controls JS -->
-    <script>
-        function openNewEventModal() {
-            document.getElementById('newEventModal').classList.remove('hidden');
-        }
-
-        function closeNewEventModal() {
-            document.getElementById('newEventModal').classList.add('hidden');
-        }
-
-        function openNewCategoryModal() {
-            document.getElementById('newCategoryModal').classList.remove('hidden');
-        }
-
-        function closeNewCategoryModal() {
-            document.getElementById('newCategoryModal').classList.add('hidden');
-        }
-
-        function toggleDeployGuide() {
-            const modal = document.getElementById('deployModal');
-            modal.classList.toggle('hidden');
-        }
-
-        function selectMood(moodText) {
-            document.getElementById('selectedMood').value = moodText;
-            const btns = document.querySelectorAll('.mood-btn');
-            btns.forEach(btn => {
-                if (btn.innerText.includes(moodText)) {
-                    btn.classList.add('border-indigo-500', 'bg-indigo-600/30', 'text-white');
-                    btn.classList.remove('border-gray-700', 'text-gray-300');
-                } else {
-                    btn.classList.remove('border-indigo-500', 'bg-indigo-600/30', 'text-white');
-                    btn.classList.add('border-gray-700', 'text-gray-300');
+        function react(id, type) {
+            const eventRef = db.collection("events").doc(id);
+            eventRef.get().then((doc) => {
+                if (doc.exists) {
+                    const currentReactions = doc.data().reactions || { fire: 0, skull: 0, laugh: 0 };
+                    currentReactions[type] = (currentReactions[type] || 0) + 1;
+                    eventRef.update({ reactions: currentReactions });
                 }
             });
         }
+
+        function filterCategory(cat) {
+            activeCategory = cat;
+            renderCategories();
+            renderEvents();
+        }
+
+        function handleSearch() {
+            renderEvents();
+        }
+
+        function openModal() { document.getElementById('eventModal').classList.add('active'); }
+        function closeModal() { document.getElementById('eventModal').classList.remove('active'); }
+        function openCategoryModal() { document.getElementById('categoryModal').classList.add('active'); }
+        function closeCategoryModal() { document.getElementById('categoryModal').classList.remove('active'); }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.innerText = text;
+            return div.innerHTML;
+        }
+
+        // Start App
+        initRealtimeData();
     </script>
 </body>
 </html>
-```
