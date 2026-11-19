@@ -184,6 +184,26 @@
             z-index: 2;
         }
 
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff4770;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 0.8rem;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .delete-btn:hover { background: #ff4770; color: #fff; transform: scale(1.1); }
+
         .polaroid-img {
             width: 100%;
             height: 200px;
@@ -424,10 +444,10 @@
         </div>
     </div>
 
-    <!-- Modal: 30+ Hazır GIF Seçici -->
+    <!-- Modal: GIF Seçici -->
     <div class="modal" id="gifModal">
         <div class="modal-box" style="text-align:center;">
-            <h3>🎬 30+ GIF Arşivi</h3>
+            <h3>🎬 GIF Arşivi</h3>
             <p style="color:var(--text-muted); font-size:0.85rem; margin-top:5px;">Panoya eklemek için bir GIF seç:</p>
             <div class="gif-grid">
                 <img src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif')" alt="GIF">
@@ -443,7 +463,6 @@
                 <img src="https://media.giphy.com/media/3o7TKSjRrfIPjeiVyM/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/3o7TKSjRrfIPjeiVyM/giphy.gif')" alt="GIF">
                 <img src="https://media.giphy.com/media/10hvUmuIMWAejS/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/10hvUmuIMWAejS/giphy.gif')" alt="GIF">
                 <img src="https://media.giphy.com/media/l4FGpPki5v2Bcd6Ss/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/l4FGpPki5v2Bcd6Ss/giphy.gif')" alt="GIF">
-                <img src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif')" alt="GIF">
                 <img src="https://media.giphy.com/media/xTiTnMhJTwNHCHdTZS/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/xTiTnMhJTwNHCHdTZS/giphy.gif')" alt="GIF">
                 <img src="https://media.giphy.com/media/artj92V8o75VPL7AeQ/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/artj92V8o75VPL7AeQ/giphy.gif')" alt="GIF">
                 <img src="https://media.giphy.com/media/26n6WuwSvJJk5ZR4A/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/26n6WuwSvJJk5ZR4A/giphy.gif')" alt="GIF">
@@ -455,20 +474,18 @@
                 <img src="https://media.giphy.com/media/3o6Zt6ML6BklcajjsA/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/3o6Zt6ML6BklcajjsA/giphy.gif')" alt="GIF">
                 <img src="https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif')" alt="GIF">
                 <img src="https://media.giphy.com/media/l1J9EdzfOSgfyueLm/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/l1J9EdzfOSgfyueLm/giphy.gif')" alt="GIF">
-                <img src="https://media.giphy.com/media/l0HlRnAWXxn0MhOBK/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/l0HlRnAWXxn0MhOBK/giphy.gif')" alt="GIF">
                 <img src="https://media.giphy.com/media/26u4cqiYI30juCOGY/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/26u4cqiYI30juCOGY/giphy.gif')" alt="GIF">
                 <img src="https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif')" alt="GIF">
                 <img src="https://media.giphy.com/media/3o6gbbuLW76jkt8vIc/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/3o6gbbuLW76jkt8vIc/giphy.gif')" alt="GIF">
-                <img src="https://media.giphy.com/media/xT5LMFZDsj0AKUDYTS/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/xT5LMFZDsj0AKUDYTS/giphy.gif')" alt="GIF">
             </div>
             <button type="button" onclick="closeModal('gifModal')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-muted); cursor:pointer;">Kapat</button>
         </div>
     </div>
 
-    <!-- Modal: 30+ Zengin Sticker (Çıkartma) Galerisi -->
+    <!-- Modal: Sticker Seçimi -->
     <div class="modal" id="stickerModal">
         <div class="modal-box" style="text-align:center;">
-            <h3>⭐ 30+ Sticker Seçimi</h3>
+            <h3>⭐ Sticker Seçimi</h3>
             <p style="color:var(--text-muted); font-size:0.85rem; margin-top:5px;">Duvara yapıştırmak için bir çıkartma seç:</p>
             <div class="picker-grid">
                 <div class="sticker-item" onclick="addSticker('💖')">💖</div>
@@ -502,7 +519,6 @@
                 <div class="sticker-item" onclick="addSticker('🍩')">🍩</div>
                 <div class="sticker-item" onclick="addSticker('🍔')">🍔</div>
                 <div class="sticker-item" onclick="addSticker('🍿')">🍿</div>
-                <div class="sticker-item" onclick="addSticker('⚡')">⚡</div>
             </div>
             <button type="button" onclick="closeModal('stickerModal')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-muted); cursor:pointer;">Kapat</button>
         </div>
@@ -569,6 +585,13 @@
         const urlParams = new URLSearchParams(window.location.search);
         const isOwner = !urlParams.has('guest');
 
+        // Her tarayıcı için benzersiz bir cihaz kimliği oluşturalım ki kimin ne eklediğini bilelim
+        let deviceId = localStorage.getItem('muural_device_id');
+        if (!deviceId) {
+            deviceId = 'dev_' + Math.random().toString(36).substring(2, 9);
+            localStorage.setItem('muural_device_id', deviceId);
+        }
+
         if(isOwner) {
             document.getElementById('roleIndicator').innerText = "👑 Kurucu";
             document.getElementById('themeContainer').style.display = "block";
@@ -619,10 +642,15 @@
             }
 
             grid.innerHTML = items.map(item => {
+                // Silme yetkisi: Kurucuysan ya da içeriği ekleyen kişi sensen sil butonu görünür
+                const canDelete = isOwner || item.deviceId === deviceId;
+                const deleteBtnHtml = canDelete ? `<button class="delete-btn" onclick="deleteItem('${item.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>` : '';
+
                 if(item.type === 'polaroid' || item.type === 'gif') {
                     return `
                         <div class="item-card">
                             <div class="tape"></div>
+                            ${deleteBtnHtml}
                             <img src="${escapeHtml(item.url)}" class="polaroid-img" alt="Görsel/GIF">
                             ${item.caption ? `<div class="card-caption">${escapeHtml(item.caption)}</div>` : ''}
                             <div class="card-author">~ ${escapeHtml(item.author || 'Aga')}</div>
@@ -632,13 +660,15 @@
                     return `
                         <div class="item-card" style="background: rgba(255, 248, 196, 0.95); color: #333;">
                             <div class="tape" style="background: rgba(200,200,200,0.5);"></div>
-                            <div style="font-family:'Caveat', cursive; font-size:1.45rem; line-height:1.4; word-break:break-word;">${escapeHtml(item.content)}</div>
+                            ${deleteBtnHtml}
+                            <div style="font-family:'Caveat', cursive; font-size:1.45rem; line-height:1.4; word-break:break-word; margin-top:5px;">${escapeHtml(item.content)}</div>
                             <div class="card-author" style="color: #666;">~ ${escapeHtml(item.author)}</div>
                         </div>
                     `;
                 } else if(item.type === 'sticker') {
                     return `
                         <div class="item-card" style="text-align:center; padding:1.5rem; background:rgba(255,255,255,0.6);">
+                            ${deleteBtnHtml}
                             <div style="font-size:3.5rem; margin-bottom:5px;">${item.emoji}</div>
                             <div class="card-author">Sticker</div>
                         </div>
@@ -647,7 +677,8 @@
                     return `
                         <div class="item-card">
                             <div class="tape"></div>
-                            <img src="${item.url}" class="polaroid-img" style="background:#fff;" alt="Çizim">
+                            ${deleteBtnHtml}
+                            <img src="${item.url}" class="polaroid-img" style="background:#fff; margin-top:5px;" alt="Çizim">
                             <div class="card-author">Çizen: ~ ${escapeHtml(item.author)}</div>
                         </div>
                     `;
@@ -655,6 +686,7 @@
                     return `
                         <div class="item-card music-card">
                             <div class="tape"></div>
+                            ${deleteBtnHtml}
                             <div class="vinyl-disc" id="disc-${item.id}" onclick="toggleAudio('${item.id}', '${item.url}')">
                                 <div class="vinyl-center"></div>
                             </div>
@@ -668,6 +700,15 @@
                     `;
                 }
             }).join('');
+        }
+
+        // İçerik Silme Fonksiyonu
+        function deleteItem(id) {
+            if(confirm("Bu içeriği silmek istediğine emin misin?")) {
+                db.collection("muural_items").doc(id).delete().catch(error => {
+                    alert("Silinirken bir hata oluştu.");
+                });
+            }
         }
 
         // Cihazdan Görsel Seçme Mantığı
@@ -723,6 +764,7 @@
                 type: 'drawing',
                 author: author,
                 url: dataUrl,
+                deviceId: deviceId,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
                 closeModal('drawingModal');
@@ -735,6 +777,7 @@
             db.collection("muural_items").add({
                 type: 'sticker',
                 emoji: emoji,
+                deviceId: deviceId,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
                 closeModal('stickerModal');
@@ -746,6 +789,7 @@
                 type: 'gif',
                 author: 'Aga',
                 url: url,
+                deviceId: deviceId,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
                 closeModal('gifModal');
@@ -797,6 +841,7 @@
                 author: document.getElementById('pAuthor').value,
                 url: selectedBase64Image,
                 caption: document.getElementById('pCaption').value,
+                deviceId: deviceId,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             };
             db.collection("muural_items").add(newItem).then(() => {
@@ -815,6 +860,7 @@
                 type: 'note',
                 author: document.getElementById('nAuthor').value,
                 content: document.getElementById('nContent').value,
+                deviceId: deviceId,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             };
             db.collection("muural_items").add(newItem).then(() => {
@@ -831,6 +877,7 @@
                 author: document.getElementById('mAuthor').value,
                 title: document.getElementById('mTitle').value,
                 url: document.getElementById('mUrl').value,
+                deviceId: deviceId,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             };
             db.collection("muural_items").add(newItem).then(() => {
@@ -845,7 +892,7 @@
             const baseUrl = window.location.href.split('?')[0];
             const guestUrl = `${baseUrl}?guest=true`;
             navigator.clipboard.writeText(guestUrl).then(() => {
-                alert("Arkadaşların için paylaşım linki kopyalandı! Bu linkle girenler pano temasını değiştiremez ama içerik ekleyebilir.");
+                alert("Arkadaşların için paylaşım linki kopyalandı! Bu linkle girenler pano temasını değiştiremez ama içerik ekleyebilir ve kendi eklediklerini silebilir.");
             });
         }
 
