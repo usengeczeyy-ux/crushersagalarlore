@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="tr" data-theme="lacivert">
+<html lang="tr" data-theme="pastel">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>crushers agalar ✰ - Lore & Olay Arşivi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Straw Muural ✰ Ortak Anı Panosu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600;700&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Firebase SDKs -->
@@ -13,649 +13,384 @@
 
     <style>
         :root {
-            --bg-main: #0b0f19;
-            --bg-card: rgba(22, 28, 45, 0.7);
+            --bg-main: #fcf6f0;
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --primary: #ff6b8b;
+            --primary-hover: #ff4770;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --accent-glow: rgba(255, 107, 139, 0.2);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        [data-theme="pastel"] {
+            --bg-main: #fcf6f0;
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --border-color: rgba(230, 210, 200, 0.5);
+            --primary: #ff758c;
+            --primary-hover: #ff526d;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --accent-glow: rgba(255, 117, 140, 0.2);
+        }
+
+        [data-theme="dark"] {
+            --bg-main: #0f1016;
+            --bg-card: rgba(24, 26, 38, 0.85);
             --border-color: rgba(255, 255, 255, 0.1);
-            --primary: #6366f1;
-            --primary-hover: #4f46e5;
+            --primary: #a855f7;
+            --primary-hover: #9333ea;
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
-            --accent-glow: rgba(99, 102, 241, 0.15);
-            --card-hover-border: rgba(99, 102, 241, 0.4);
+            --accent-glow: rgba(168, 85, 247, 0.25);
         }
 
-        [data-theme="siyah"] {
-            --bg-main: #000000;
-            --bg-card: rgba(18, 18, 18, 0.85);
-            --border-color: rgba(255, 255, 255, 0.15);
-            --primary: #3b82f6;
-            --primary-hover: #2563eb;
-            --text-main: #ffffff;
-            --text-muted: #a1a1aa;
-            --accent-glow: rgba(255, 255, 255, 0.05);
-            --card-hover-border: rgba(255, 255, 255, 0.3);
+        [data-theme="y2k"] {
+            --bg-main: #120024;
+            --bg-card: rgba(45, 0, 77, 0.8);
+            --border-color: rgba(255, 0, 128, 0.3);
+            --primary: #ff007f;
+            --primary-hover: #e60073;
+            --text-main: #00ffff;
+            --text-muted: #ff80df;
+            --accent-glow: rgba(255, 0, 127, 0.4);
         }
 
-        [data-theme="beyaz"] {
-            --bg-main: #f8fafc;
-            --bg-card: rgba(255, 255, 255, 0.9);
-            --border-color: rgba(0, 0, 0, 0.08);
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --accent-glow: rgba(37, 99, 235, 0.1);
-            --card-hover-border: rgba(37, 99, 235, 0.3);
+        [data-theme="cork"] {
+            --bg-main: #c49a6c;
+            --bg-card: rgba(245, 230, 205, 0.9);
+            --border-color: rgba(139, 94, 60, 0.3);
+            --primary: #8b5e3c;
+            --primary-hover: #6f472b;
+            --text-main: #3d2612;
+            --text-muted: #7d5b3d;
+            --accent-glow: rgba(139, 94, 60, 0.2);
         }
 
-        [data-theme="bordo"] {
-            --bg-main: #1a0507;
-            --bg-card: rgba(45, 12, 16, 0.75);
-            --border-color: rgba(239, 68, 68, 0.2);
-            --primary: #e11d48;
-            --primary-hover: #be123c;
-            --text-main: #fff1f2;
-            --text-muted: #fda4af;
-            --accent-glow: rgba(225, 29, 72, 0.2);
-            --card-hover-border: rgba(225, 29, 72, 0.5);
-        }
-
-        [data-theme="sari"] {
-            --bg-main: #141204;
-            --bg-card: rgba(38, 34, 10, 0.8);
-            --border-color: rgba(234, 179, 8, 0.25);
-            --primary: #eab308;
-            --primary-hover: #ca8a04;
-            --text-main: #fefce8;
-            --text-muted: #fef08a;
-            --accent-glow: rgba(234, 179, 8, 0.15);
-            --card-hover-border: rgba(234, 179, 8, 0.5);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--bg-main);
             color: var(--text-main);
             min-height: 100vh;
-            padding-bottom: 60px;
+            overflow-x: hidden;
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 24px 24px;
+            padding-bottom: 120px;
         }
 
         header {
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(16px);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
             z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 1rem 1.5rem;
+            padding: 0.8rem 1.5rem;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-        }
-
-        .logo-area {
-            display: flex;
             align-items: center;
-            gap: 12px;
         }
 
-        .logo-icon {
-            width: 42px;
-            height: 42px;
+        .logo-area { display: flex; align-items: center; gap: 10px; }
+        .logo-badge {
             background: var(--primary);
+            color: #fff;
+            width: 38px;
+            height: 38px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
-            font-size: 1.3rem;
-            box-shadow: 0 0 20px var(--accent-glow);
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px var(--accent-glow);
         }
 
-        .logo-text h1 {
-            font-size: 1.25rem;
+        .board-title-input {
+            background: transparent;
+            border: none;
+            font-size: 1.2rem;
             font-weight: 800;
-            letter-spacing: -0.5px;
+            color: var(--text-main);
+            outline: none;
+            width: 240px;
         }
 
-        .logo-text span {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .theme-selector {
-            display: flex;
-            gap: 6px;
-            background: rgba(0,0,0,0.2);
-            padding: 4px;
-            border-radius: 30px;
-            border: 1px solid var(--border-color);
-        }
-
-        .theme-btn {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .theme-btn:hover {
-            transform: scale(1.2);
-        }
-
-        .theme-btn.active {
-            border-color: #fff;
-        }
-
-        .theme-lacivert { background: #6366f1; }
-        .theme-siyah { background: #000000; }
-        .theme-beyaz { background: #ffffff; }
-        .theme-bordo { background: #e11d48; }
-        .theme-sari { background: #eab308; }
+        .header-actions { display: flex; align-items: center; gap: 10px; }
 
         .btn {
             background: var(--primary);
             color: #fff;
             border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-        }
-
-        .btn:hover {
-            background: var(--primary-hover);
-        }
-
-        .main-layout {
-            max-width: 1100px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 2rem;
-        }
-
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .hero-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 2rem;
-            backdrop-filter: blur(12px);
-            margin-bottom: 2rem;
-            grid-column: 1 / -1;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-        }
-
-        .hero-desc {
-            color: var(--text-muted);
-            font-size: 1rem;
-            max-width: 700px;
-            line-height: 1.6;
-        }
-
-        .stats-bar {
-            display: flex;
-            gap: 2rem;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .stat-item h3 {
-            font-size: 1.5rem;
-            font-weight: 800;
-        }
-
-        .stat-item p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.25rem;
-            backdrop-filter: blur(12px);
-        }
-
-        .card-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .category-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .category-item {
-            padding: 0.75rem 1rem;
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .category-item:hover, .category-item.active {
-            background: var(--accent-glow);
-            color: var(--text-main);
-        }
-
-        .category-item.active {
-            border-left: 3px solid var(--primary);
-        }
-
-        .search-box {
-            position: relative;
-            width: 100%;
-            margin-bottom: 1.5rem;
-        }
-
-        .search-box input {
-            width: 100%;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 0.8rem 1rem 0.8rem 2.8rem;
+            padding: 0.6rem 1.1rem;
             border-radius: 12px;
-            color: var(--text-main);
-            outline: none;
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-        }
-
-        .event-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            backdrop-filter: blur(12px);
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .event-card:hover {
-            border-color: var(--card-hover-border);
-        }
-
-        .event-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .event-meta {
+            font-weight: 700;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 12px var(--accent-glow);
+            transition: transform 0.2s;
         }
+        .btn:hover { transform: translateY(-2px); background: var(--primary-hover); }
 
-        .author-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: var(--accent-glow);
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .author-info h4 {
-            font-size: 0.95rem;
-            font-weight: 700;
-        }
-
-        .author-info span {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .category-badge {
+        .role-badge {
             font-size: 0.75rem;
             padding: 4px 10px;
             border-radius: 20px;
             background: var(--accent-glow);
             color: var(--primary);
-            font-weight: 700;
+            font-weight: 800;
         }
 
-        .event-title {
-            font-size: 1.2rem;
-            font-weight: 700;
+        /* Canvas Workspace */
+        .workspace {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            min-height: 70vh;
+            position: relative;
         }
 
-        .event-content {
-            color: var(--text-muted);
-            line-height: 1.6;
-            font-size: 0.95rem;
-            white-space: pre-line;
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
         }
 
-        .event-image {
-            width: 100%;
-            max-height: 400px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-top: 0.5rem;
+        .item-card {
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+            backdrop-filter: blur(8px);
+            transition: transform 0.2s;
+        }
+        .item-card:hover { transform: translateY(-3px); }
+
+        .tape {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 22px;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px dashed rgba(0,0,0,0.15);
+            z-index: 2;
         }
 
-        .event-footer {
-            display: flex;
-            gap: 15px;
-            padding-top: 0.5rem;
-            border-top: 1px solid var(--border-color);
+        .polaroid-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 8px;
         }
 
-        .reaction-btn {
-            background: transparent;
-            border: none;
+        .card-caption {
+            font-family: 'Caveat', cursive;
+            font-size: 1.3rem;
+            text-align: center;
+            color: var(--text-main);
+            margin-top: 5px;
+        }
+
+        .card-author {
+            font-size: 0.75rem;
             color: var(--text-muted);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.85rem;
+            text-align: right;
+            margin-top: 8px;
             font-weight: 600;
         }
 
-        .reaction-btn:hover {
-            color: var(--primary);
+        /* Music Player Card */
+        .music-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 1rem;
+        }
+        .vinyl-disc {
+            width: 55px;
+            height: 55px;
+            background: #111;
+            border-radius: 50%;
+            border: 3px dashed #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            animation: spin 4s linear infinite paused;
+            flex-shrink: 0;
+        }
+        .vinyl-disc.playing { animation-play-state: running; }
+        .vinyl-center { width: 18px; height: 18px; background: var(--primary); border-radius: 50%; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Floating Toolbar */
+        .floating-toolbar {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 40px;
+            display: flex;
+            gap: 12px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            z-index: 100;
         }
 
+        .tool-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .tool-btn:hover { background: var(--accent-glow); color: var(--primary); }
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(6px);
             z-index: 1000;
             align-items: center;
             justify-content: center;
             padding: 1rem;
         }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--bg-main);
+        .modal.active { display: flex; }
+        .modal-box {
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
-            width: 100%;
-            max-width: 550px;
+            width: 100%; max-width: 480px;
             border-radius: 20px;
             padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 0.4rem;
-            color: var(--text-muted);
-        }
-
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.40rem; color: var(--text-muted); }
         .form-group input, .form-group textarea, .form-group select {
-            width: 100%;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 0.75rem 1rem;
-            border-radius: 10px;
-            color: var(--text-main);
-            outline: none;
-        }
-
-        .file-upload-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 0.6rem 1rem;
-            background: var(--bg-card);
-            border: 1px dashed var(--border-color);
-            border-radius: 10px;
-            cursor: pointer;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        .file-upload-btn:hover {
-            border-color: var(--primary);
-            color: var(--text-main);
-        }
-
-        .preview-img-container {
-            margin-top: 10px;
-            position: relative;
-            display: none;
-        }
-
-        .preview-img-container img {
-            max-height: 120px;
-            border-radius: 8px;
-        }
-
-        @media (max-width: 768px) {
-            .main-layout {
-                grid-template-columns: 1fr;
-            }
+            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem; border-radius: 10px; color: var(--text-main); outline: none;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="nav-container">
-            <div class="logo-area">
-                <div class="logo-icon"><i class="fa-solid fa-crown"></i></div>
-                <div class="logo-text">
-                    <h1>crushers agalar ✰</h1>
-                    <span>Official Lore & Olay Arşivi</span>
-                </div>
+        <div class="logo-area">
+            <div class="logo-badge"><i class="fa-solid fa-heart"></i></div>
+            <input type="text" id="boardTitle" class="board-title-input" value="straw muural ✰" readonly>
+        </div>
+        <div class="header-actions">
+            <span id="roleIndicator" class="role-badge">👑 Kurucu</span>
+            <div id="themeContainer" style="display:none;">
+                <select id="themeSelect" onchange="changeTheme(this.value)" style="padding:5px 10px; border-radius:8px; background:var(--bg-card); color:var(--text-main); border:1px solid var(--border-color);">
+                    <option value="pastel">Pastel Pembe</option>
+                    <option value="dark">Gece Modu</option>
+                    <option value="y2k">Y2K Kaos</option>
+                    <option value="cork">Mantar Pano</option>
+                </select>
             </div>
-            <div class="header-actions">
-                <div class="theme-selector">
-                    <div class="theme-btn theme-lacivert active" onclick="setTheme('lacivert')"></div>
-                    <div class="theme-btn theme-siyah" onclick="setTheme('siyah')"></div>
-                    <div class="theme-btn theme-beyaz" onclick="setTheme('beyaz')"></div>
-                    <div class="theme-btn theme-bordo" onclick="setTheme('bordo')"></div>
-                    <div class="theme-btn theme-sari" onclick="setTheme('sari')"></div>
-                </div>
-                <button class="btn" onclick="openModal()"><i class="fa-solid fa-plus"></i> <span>Olay Ekle</span></button>
-            </div>
+            <button class="btn" onclick="shareLink()"><i class="fa-solid fa-link"></i> Linki Paylaş</button>
         </div>
     </header>
 
-    <div class="main-layout">
-
-        <div class="hero-card">
-            <span style="display:inline-block; background:rgba(34,197,94,0.15); color:#22c55e; padding:4px 12px; border-radius:20px; font-weight:700; font-size:0.75rem; margin-bottom:1rem;">
-                <i class="fa-solid fa-circle" style="font-size:0.5rem; vertical-align:middle;"></i> Canlı Bulut Veritabanı Aktif
-            </span>
-            <h2 class="hero-title">crushers agalar ✰ Lore'una Hoş Geldiniz 📜</h2>
-            <p class="hero-desc">Topluluktaki darbeleri kaybetmeyin. Herkes travmalarını canlı tutmak için buraya yazabilir!</p>
-            <div class="stats-bar">
-                <div class="stat-item">
-                    <h3 id="stat-total">0</h3>
-                    <p>Toplam Olay</p>
-                </div>
-                <div class="stat-item">
-                    <h3 id="stat-categories">0</h3>
-                    <p>Başlık</p>
-                </div>
-                <div class="stat-item">
-                    <h3 id="stat-reactions">0</h3>
-                    <p>Reaksiyon</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="sidebar">
-            <div class="card">
-                <div class="card-title">
-                    <span># BAŞLIKLAR</span>
-                    <button style="background:none; border:none; color:var(--primary); cursor:pointer; font-weight:700;" onclick="openCategoryModal()">+ Yeni</button>
-                </div>
-                <ul class="category-list" id="categoryList">
-                    <li class="category-item active" onclick="filterCategory('all')">
-                        <span># Hepsi</span>
-                        <span id="count-all">0</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="feed-section">
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="İçerik, başlık veya isim ara..." oninput="handleSearch()">
-            </div>
-
-            <div id="eventsFeed">
-                <div style="text-align:center; padding:3rem; color:var(--text-muted);">
-                    Yükleniyor...
-                </div>
+    <div class="workspace">
+        <div id="itemsGrid" class="grid-container">
+            <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: var(--text-muted);">
+                Panolar yükleniyor...
             </div>
         </div>
     </div>
 
-    <!-- Modal: Olay Ekle -->
-    <div class="modal" id="eventModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Yeni Darbe / Travma Kaydet</h3>
-                <button class="close-btn" onclick="closeModal()">&times;</button>
-            </div>
-            <form id="eventForm" onsubmit="saveEvent(event)">
-                <div class="form-group">
+    <!-- Floating Action Toolbar -->
+    <div class="floating-toolbar">
+        <button class="tool-btn" onclick="openModal('polaroidModal')" title="Polaroid Fotoğraf Ekle"><i class="fa-solid fa-camera"></i></button>
+        <button class="tool-btn" onclick="openModal('noteModal')" title="Not Ekle"><i class="fa-solid fa-note-sticky"></i></button>
+        <button class="tool-btn" onclick="openModal('musicModal')" title="Şarkı/Müzik Ekle"><i class="fa-solid fa-music"></i></button>
+    </div>
+
+    <!-- Modal: Polaroid -->
+    <div class="modal" id="polaroidModal">
+        <div class="modal-box">
+            <h3>📸 Polaroid Fotoğraf Ekle</h3>
+            <form onsubmit="addPolaroid(event)">
+                <div class="form-group" style="margin-top:1rem;">
                     <label>Adın / Takma Adın</label>
-                    <input type="text" id="authorInput" placeholder="Örn: Agalardan Biri" required>
+                    <input type="text" id="pAuthor" required placeholder="Örn: Zeynep">
                 </div>
                 <div class="form-group">
-                    <label>Başlık / Konu</label>
-                    <select id="categorySelect" required></select>
+                    <label>Fotoğraf URL (Görsel Adresi)</label>
+                    <input type="url" id="pUrl" required placeholder="https://ornek.com/resim.jpg">
                 </div>
                 <div class="form-group">
-                    <label>Olay Başlığı</label>
-                    <input type="text" id="titleInput" placeholder="Neler oldu?" required>
+                    <label>Alt Not / Açıklama</label>
+                    <input type="text" id="pCaption" placeholder="Anı notu...">
                 </div>
-                <div class="form-group">
-                    <label>Olayın Detayları / Travma Hikayesi</label>
-                    <textarea id="contentInput" rows="4" placeholder="Tüm detaylarıyla anlat..." required></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Fotoğraf / Görsel Ekle (Opsiyonel)</label>
-                    <label class="file-upload-btn">
-                        <i class="fa-solid fa-image"></i> Görsel Seç
-                        <input type="file" id="imageInput" accept="image/*" style="display:none;" onchange="handleImagePreview(event)">
-                    </label>
-                    <div class="preview-img-container" id="previewContainer">
-                        <img id="previewImg" src="" alt="Önizleme">
-                    </div>
-                </div>
-                <button type="submit" class="btn" style="width:100%; justify-content:center; margin-top:1rem;">Buluta Kaydet</button>
+                <button type="submit" class="btn" style="width:100%; justify-content:center;">Panoya Ekle</button>
+                <button type="button" onclick="closeModal('polaroidModal')" style="background:none; border:none; width:100%; margin-top:10px; color:var(--text-muted); cursor:pointer;">İptal</button>
             </form>
         </div>
     </div>
 
-    <!-- Modal: Başlık Ekle -->
-    <div class="modal" id="categoryModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Yeni Başlık Oluştur</h3>
-                <button class="close-btn" onclick="closeCategoryModal()">&times;</button>
-            </div>
-            <form onsubmit="saveCategory(event)">
-                <div class="form-group">
-                    <label>Başlık Adı</label>
-                    <input type="text" id="newCategoryInput" placeholder="Örn: Darbeler" required>
+    <!-- Modal: Not -->
+    <div class="modal" id="noteModal">
+        <div class="modal-box">
+            <h3>📝 Mini Not Ekle</h3>
+            <form onsubmit="addNote(event)">
+                <div class="form-group" style="margin-top:1rem;">
+                    <label>Adın / Takma Adın</label>
+                    <input type="text" id="nAuthor" required placeholder="Örn: Eren">
                 </div>
-                <button type="submit" class="btn" style="width:100%; justify-content:center;">Başlık Ekle</button>
+                <div class="form-group">
+                    <label>Not İçeriği</label>
+                    <textarea id="nContent" rows="3" required placeholder="Mesajını yaz..."></textarea>
+                </div>
+                <button type="submit" class="btn" style="width:100%; justify-content:center;">Notu Yapıştır</button>
+                <button type="button" onclick="closeModal('noteModal')" style="background:none; border:none; width:100%; margin-top:10px; color:var(--text-muted); cursor:pointer;">İptal</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Müzik -->
+    <div class="modal" id="musicModal">
+        <div class="modal-box">
+            <h3>💿 Şarkı Kartı Ekle</h3>
+            <form onsubmit="addMusic(event)">
+                <div class="form-group" style="margin-top:1rem;">
+                    <label>Adın / Takma Adın</label>
+                    <input type="text" id="mAuthor" required placeholder="Örn: Can">
+                </div>
+                <div class="form-group">
+                    <label>Şarkı Adı ve Sanatçı</label>
+                    <input type="text" id="mTitle" required placeholder="Örn: Duman - Belki Alışman Lazım">
+                </div>
+                <div class="form-group">
+                    <label>Ses / Şarkı Linki (MP3 veya Ses Dosyası URL)</label>
+                    <input type="url" id="mUrl" required placeholder="https://.../sarki.mp3">
+                </div>
+                <button type="submit" class="btn" style="width:100%; justify-content:center;">CD'yi Ekle</button>
+                <button type="button" onclick="closeModal('musicModal')" style="background:none; border:none; width:100%; margin-top:10px; color:var(--text-muted); cursor:pointer;">İptal</button>
             </form>
         </div>
     </div>
@@ -675,209 +410,195 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        let categories = ["Darbeler"];
-        let events = [];
-        let activeCategory = 'all';
-        let currentImageData = "";
+        // Rol ve Kurucu Kontrolü
+        const urlParams = new URLSearchParams(window.location.search);
+        const isOwner = !urlParams.has('guest');
 
-        function setTheme(themeName) {
+        if(isOwner) {
+            document.getElementById('roleIndicator').innerText = "👑 Kurucu";
+            document.getElementById('themeContainer').style.display = "block";
+            document.getElementById('boardTitle').removeAttribute('readonly');
+            document.getElementById('boardTitle').addEventListener('blur', (e) => updateBoardTitle(e.target.value));
+        } else {
+            document.getElementById('roleIndicator').innerText = "🎨 Arkadaş (Misafir)";
+            document.getElementById('themeContainer').style.display = "none";
+        }
+
+        // Tema Yönetimi
+        function changeTheme(themeName) {
             document.documentElement.setAttribute('data-theme', themeName);
-            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector(`.theme-${themeName}`).classList.add('active');
+            db.collection("board_settings").doc("main").set({ theme: themeName }, { merge: true });
         }
 
-        // Firestore Realtime Listener
-        function initRealtimeData() {
-            db.collection("events").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
-                events = [];
-                snapshot.forEach((doc) => {
-                    events.push({ id: doc.id, ...doc.data() });
-                });
-                renderEvents();
-                updateStats();
-            });
+        function updateBoardTitle(title) {
+            db.collection("board_settings").doc("main").set({ title: title }, { merge: true });
+        }
 
-            db.collection("categories").onSnapshot((snapshot) => {
-                if (!snapshot.empty) {
-                    let catList = [];
-                    snapshot.forEach((doc) => catList.push(doc.data().name));
-                    categories = catList;
+        // Firestore Canlı Dinleme
+        db.collection("board_settings").doc("main").onSnapshot((doc) => {
+            if(doc.exists) {
+                const data = doc.data();
+                if(data.theme) {
+                    document.documentElement.setAttribute('data-theme', data.theme);
+                    document.getElementById('themeSelect').value = data.theme;
                 }
-                renderCategories();
-            });
-        }
-
-        function handleImagePreview(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    currentImageData = evt.target.result;
-                    document.getElementById('previewImg').src = currentImageData;
-                    document.getElementById('previewContainer').style.display = 'block';
-                };
-                reader.readAsDataURL(file);
+                if(data.title && document.activeElement !== document.getElementById('boardTitle')) {
+                    document.getElementById('boardTitle').value = data.title;
+                }
             }
-        }
+        });
 
-        function renderCategories() {
-            const listEl = document.getElementById('categoryList');
-            const selectEl = document.getElementById('categorySelect');
-            
-            listEl.innerHTML = `
-                <li class="category-item ${activeCategory === 'all' ? 'active' : ''}" onclick="filterCategory('all')">
-                    <span># Hepsi</span>
-                    <span>${events.length}</span>
-                </li>
-            `;
-            
-            selectEl.innerHTML = '';
-
-            categories.forEach(cat => {
-                const count = events.filter(e => e.category === cat).length;
-                listEl.innerHTML += `
-                    <li class="category-item ${activeCategory === cat ? 'active' : ''}" onclick="filterCategory('${cat}')">
-                        <span># ${cat}</span>
-                        <span>${count}</span>
-                    </li>
-                `;
-
-                selectEl.innerHTML += `<option value="${cat}">${cat}</option>`;
+        db.collection("muural_items").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+            let items = [];
+            snapshot.forEach((doc) => {
+                items.push({ id: doc.id, ...doc.data() });
             });
-        }
+            renderItems(items);
+        });
 
-        function renderEvents() {
-            const feed = document.getElementById('eventsFeed');
-            const query = document.getElementById('searchInput').value.toLowerCase();
-
-            let filtered = events.filter(e => {
-                const matchesCat = activeCategory === 'all' || e.category === activeCategory;
-                const matchesSearch = e.title.toLowerCase().includes(query) || 
-                                      e.content.toLowerCase().includes(query) || 
-                                      e.author.toLowerCase().includes(query);
-                return matchesCat && matchesSearch;
-            });
-
-            if(filtered.length === 0) {
-                feed.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-muted);">Henüz kaydolmuş bir olay yok. İlkini sen ekle!</div>`;
+        function renderItems(items) {
+            const grid = document.getElementById('itemsGrid');
+            if(items.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: var(--text-muted);">Henüz bir şey eklenmemiş. Alttaki butonlarla ilk hatırayı sen ekle!</div>`;
                 return;
             }
 
-            feed.innerHTML = filtered.map(e => `
-                <div class="event-card">
-                    <div class="event-header">
-                        <div class="event-meta">
-                            <div class="author-avatar">${e.author.charAt(0).toUpperCase()}</div>
-                            <div class="author-info">
-                                <h4>${escapeHtml(e.author)}</h4>
-                                <span>${e.date || 'Tarih yok'}</span>
-                            </div>
+            grid.innerHTML = items.map(item => {
+                if(item.type === 'polaroid') {
+                    return `
+                        <div class="item-card">
+                            <div class="tape"></div>
+                            <img src="${escapeHtml(item.url)}" class="polaroid-img" alt="Fotoğraf">
+                            <div class="card-caption">${escapeHtml(item.caption || '')}</div>
+                            <div class="card-author">~ ${escapeHtml(item.author)}</div>
                         </div>
-                        <span class="category-badge"># ${escapeHtml(e.category)}</span>
-                    </div>
-                    <div class="event-title">${escapeHtml(e.title)}</div>
-                    <div class="event-content">${escapeHtml(e.content)}</div>
-                    ${e.image ? `<img src="${e.image}" class="event-image" alt="Olay Görseli">` : ''}
-                    <div class="event-footer">
-                        <button class="reaction-btn" onclick="react('${e.id}', 'fire')">
-                            🔥 <span>${e.reactions?.fire || 0}</span>
-                        </button>
-                        <button class="reaction-btn" onclick="react('${e.id}', 'skull')">
-                            💀 <span>${e.reactions?.skull || 0}</span>
-                        </button>
-                        <button class="reaction-btn" onclick="react('${e.id}', 'laugh')">
-                            😂 <span>${e.reactions?.laugh || 0}</span>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function updateStats() {
-            document.getElementById('stat-total').innerText = events.length;
-            document.getElementById('stat-categories').innerText = categories.length;
-            
-            let totalReactions = 0;
-            events.forEach(e => {
-                if(e.reactions) {
-                    totalReactions += (e.reactions.fire || 0) + (e.reactions.skull || 0) + (e.reactions.laugh || 0);
+                    `;
+                } else if(item.type === 'note') {
+                    return `
+                        <div class="item-card" style="background: rgba(255, 248, 196, 0.9); color: #333;">
+                            <div class="tape" style="background: rgba(200,200,200,0.5);"></div>
+                            <div style="font-family:'Caveat', cursive; font-size:1.4rem; line-height:1.4; word-break:break-word;">${escapeHtml(item.content)}</div>
+                            <div class="card-author" style="color: #666;">~ ${escapeHtml(item.author)}</div>
+                        </div>
+                    `;
+                } else if(item.type === 'music') {
+                    return `
+                        <div class="item-card music-card">
+                            <div class="tape"></div>
+                            <div class="vinyl-disc" id="disc-${item.id}" onclick="toggleAudio('${item.id}', '${item.url}')">
+                                <div class="vinyl-center"></div>
+                            </div>
+                            <div style="overflow:hidden;">
+                                <div style="font-weight:700; font-size:0.9rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(item.title)}</div>
+                                <div style="font-size:0.75rem; color:var(--text-muted);">Ekleyen: ${escapeHtml(item.author)}</div>
+                                <div style="font-size:0.7rem; color:var(--primary); margin-top:4px; font-weight:700; cursor:pointer;" onclick="toggleAudio('${item.id}', '${item.url}')">▶ CD'ye Bas Çalsın</div>
+                            </div>
+                            <audio id="audio-${item.id}" src="${item.url}" onended="stopDisc('${item.id}')"></audio>
+                        </div>
+                    `;
                 }
-            });
-            document.getElementById('stat-reactions').innerText = totalReactions;
-            renderCategories();
+            }).join('');
         }
 
-        function saveEvent(e) {
-            e.preventDefault();
-            const author = document.getElementById('authorInput').value;
-            const category = document.getElementById('categorySelect').value;
-            const title = document.getElementById('titleInput').value;
-            const content = document.getElementById('contentInput').value;
+        let currentPlayingAudio = null;
+        let currentPlayingDisc = null;
 
-            const newEvent = {
-                author,
-                category,
-                title,
-                content,
-                image: currentImageData || null,
-                date: new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute:'2-digit' }),
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                reactions: { fire: 0, skull: 0, laugh: 0 }
-            };
+        function toggleAudio(id, url) {
+            const audio = document.getElementById(`audio-${id}`);
+            const disc = document.getElementById(`disc-${id}`);
 
-            db.collection("events").add(newEvent).then(() => {
-                closeModal();
-                document.getElementById('eventForm').reset();
-                currentImageData = "";
-                document.getElementById('previewContainer').style.display = 'none';
-            });
-        }
+            if (currentPlayingAudio && currentPlayingAudio !== audio) {
+                currentPlayingAudio.pause();
+                currentPlayingAudio.currentTime = 0;
+                if(currentPlayingDisc) currentPlayingDisc.classList.remove('playing');
+            }
 
-        function saveCategory(e) {
-            e.preventDefault();
-            const name = document.getElementById('newCategoryInput').value.trim();
-            if(name && !categories.includes(name)) {
-                db.collection("categories").add({ name }).then(() => {
-                    closeCategoryModal();
-                    document.getElementById('newCategoryInput').value = '';
-                });
+            if (audio.paused) {
+                audio.play().catch(e => alert("Ses çalınamadı. Lütfen geçerli bir doğrudan ses/MP3 linki girin."));
+                disc.classList.add('playing');
+                currentPlayingAudio = audio;
+                currentPlayingDisc = disc;
+            } else {
+                audio.pause();
+                disc.classList.remove('playing');
+                currentPlayingAudio = null;
+                currentPlayingDisc = null;
             }
         }
 
-        function react(id, type) {
-            const eventRef = db.collection("events").doc(id);
-            eventRef.get().then((doc) => {
-                if (doc.exists) {
-                    const currentReactions = doc.data().reactions || { fire: 0, skull: 0, laugh: 0 };
-                    currentReactions[type] = (currentReactions[type] || 0) + 1;
-                    eventRef.update({ reactions: currentReactions });
-                }
+        function stopDisc(id) {
+            const disc = document.getElementById(`disc-${id}`);
+            if(disc) disc.classList.remove('playing');
+            currentPlayingAudio = null;
+            currentPlayingDisc = null;
+        }
+
+        // Veritabanına Ekleme Fonksiyonları
+        function addPolaroid(e) {
+            e.preventDefault();
+            const newItem = {
+                type: 'polaroid',
+                author: document.getElementById('pAuthor').value,
+                url: document.getElementById('pUrl').value,
+                caption: document.getElementById('pCaption').value,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            db.collection("muural_items").add(newItem).then(() => {
+                closeModal('polaroidModal');
+                document.getElementById('pAuthor').value = '';
+                document.getElementById('pUrl').value = '';
+                document.getElementById('pCaption').value = '';
             });
         }
 
-        function filterCategory(cat) {
-            activeCategory = cat;
-            renderCategories();
-            renderEvents();
+        function addNote(e) {
+            e.preventDefault();
+            const newItem = {
+                type: 'note',
+                author: document.getElementById('nAuthor').value,
+                content: document.getElementById('nContent').value,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            db.collection("muural_items").add(newItem).then(() => {
+                closeModal('noteModal');
+                document.getElementById('nAuthor').value = '';
+                document.getElementById('nContent').value = '';
+            });
         }
 
-        function handleSearch() {
-            renderEvents();
+        function addMusic(e) {
+            e.preventDefault();
+            const newItem = {
+                type: 'music',
+                author: document.getElementById('mAuthor').value,
+                title: document.getElementById('mTitle').value,
+                url: document.getElementById('mUrl').value,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            db.collection("muural_items").add(newItem).then(() => {
+                closeModal('musicModal');
+                document.getElementById('mAuthor').value = '';
+                document.getElementById('mTitle').value = '';
+                document.getElementById('mUrl').value = '';
+            });
         }
 
-        function openModal() { document.getElementById('eventModal').classList.add('active'); }
-        function closeModal() { document.getElementById('eventModal').classList.remove('active'); }
-        function openCategoryModal() { document.getElementById('categoryModal').classList.add('active'); }
-        function closeCategoryModal() { document.getElementById('categoryModal').classList.remove('active'); }
+        function shareLink() {
+            const baseUrl = window.location.href.split('?')[0];
+            const guestUrl = `${baseUrl}?guest=true`;
+            navigator.clipboard.writeText(guestUrl).then(() => {
+                alert("Arkadaşların için paylaşım linki kopyalandı! Bu linkle girenler pano temasını değiştiremez ama içerik ekleyebilir.");
+            });
+        }
+
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.innerText = text;
             return div.innerHTML;
         }
-
-        // Start App
-        initRealtimeData();
     </script>
 </body>
 </html>
