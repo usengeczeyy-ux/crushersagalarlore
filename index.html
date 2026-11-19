@@ -285,6 +285,8 @@
             border-radius: 20px;
             padding: 2rem;
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            max-height: 85vh;
+            overflow-y: auto;
         }
         .form-group { margin-bottom: 1rem; }
         .form-group label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--text-muted); }
@@ -293,24 +295,33 @@
             padding: 0.75rem 1rem; border-radius: 10px; color: var(--text-main); outline: none;
         }
 
-        /* Sticker Grid */
-        .sticker-picker {
+        .file-picker-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 0.8rem; background: rgba(0,0,0,0.03); border: 2px dashed var(--border-color);
+            border-radius: 10px; cursor: pointer; color: var(--text-muted); font-weight: 600; font-size: 0.85rem;
+        }
+        .file-picker-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--accent-glow); }
+
+        /* Picker Grids */
+        .picker-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             margin: 1rem 0;
         }
-        .sticker-option {
-            font-size: 2rem;
-            background: rgba(0,0,0,0.04);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
+        .sticker-img-item {
+            width: 100%; height: 75px; object-fit: contain;
+            background: rgba(0,0,0,0.03); border: 1px solid var(--border-color);
+            border-radius: 10px; padding: 8px; cursor: pointer;
             transition: transform 0.2s, background 0.2s;
         }
-        .sticker-option:hover { transform: scale(1.15); background: var(--accent-glow); }
+        .sticker-img-item:hover { transform: scale(1.1); background: var(--accent-glow); }
+        
+        .gif-item {
+            height: 90px; object-fit: cover; border-radius: 8px; width: 100%; cursor: pointer;
+            border: 2px solid transparent; transition: transform 0.2s, border-color 0.2s;
+        }
+        .gif-item:hover { transform: scale(1.05); border-color: var(--primary); }
     </style>
 </head>
 <body>
@@ -344,25 +355,29 @@
 
     <!-- Floating Action Toolbar -->
     <div class="floating-toolbar">
-        <button class="tool-btn" onclick="openModal('polaroidModal')" title="Polaroid Fotoğraf Ekle"><i class="fa-solid fa-camera"></i></button>
+        <button class="tool-btn" onclick="openModal('polaroidModal')" title="Galeriden Fotoğraf Ekle"><i class="fa-solid fa-camera"></i></button>
         <button class="tool-btn" onclick="openModal('noteModal')" title="Mini Not Ekle"><i class="fa-solid fa-note-sticky"></i></button>
-        <button class="tool-btn" onclick="openModal('stickerModal')" title="Çıkartma Ekle"><i class="fa-solid fa-face-smile"></i></button>
+        <button class="tool-btn" onclick="openModal('gifModal')" title="GIF Seç ve Ekle"><i class="fa-solid fa-clapperboard"></i></button>
+        <button class="tool-btn" onclick="openModal('stickerModal')" title="Sticker Seç ve Ekle"><i class="fa-solid fa-face-smile"></i></button>
         <button class="tool-btn" onclick="openModal('drawingModal')" title="Çizim Yap & Ekle"><i class="fa-solid fa-pen-nib"></i></button>
         <button class="tool-btn" onclick="openModal('musicModal')" title="Şarkı Kartı Ekle"><i class="fa-solid fa-music"></i></button>
     </div>
 
-    <!-- Modal: Polaroid -->
+    <!-- Modal: Polaroid / Galeri Fotoğrafı -->
     <div class="modal" id="polaroidModal">
         <div class="modal-box">
-            <h3>📸 Polaroid Fotoğraf Ekle</h3>
+            <h3>📸 Galeriden Fotoğraf Ekle</h3>
             <form onsubmit="addPolaroid(event)">
                 <div class="form-group" style="margin-top:1rem;">
                     <label>Adın / Takma Adın</label>
                     <input type="text" id="pAuthor" required placeholder="Örn: Agalardan Biri">
                 </div>
                 <div class="form-group">
-                    <label>Fotoğraf URL (Görsel Adresi)</label>
-                    <input type="url" id="pUrl" required placeholder="https://ornek.com/resim.jpg">
+                    <label>Cihazından Fotoğraf Seç</label>
+                    <label class="file-picker-btn">
+                        <i class="fa-solid fa-image"></i> <span id="fileNameDisplay">Galeriden Seç</span>
+                        <input type="file" id="pImageFile" accept="image/*" required style="display:none;" onchange="handleImageSelect(event)">
+                    </label>
                 </div>
                 <div class="form-group">
                     <label>Alt Not / Açıklama</label>
@@ -393,22 +408,43 @@
         </div>
     </div>
 
-    <!-- Modal: Çıkartma (Sticker) -->
+    <!-- Modal: Hazır GIF Seçici -->
+    <div class="modal" id="gifModal">
+        <div class="modal-box" style="text-align:center;">
+            <h3>🎬 GIF Seç ve Ekle</h3>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-top:5px;">Panoya eklemek için aşağıdaki GIF'lerden birine tıkla:</p>
+            <div class="picker-grid" style="grid-template-columns: repeat(2, 1fr); margin-top:15px;">
+                <img src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/l0HlRnAWXxn0MhOBK/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/l0HlRnAWXxn0MhOBK/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/xT5LMFZDsj0AKUDYTS/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/xT5LMFZDsj0AKUDYTS/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/5GoVL4DAbEDUQ/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/5GoVL4DAbEDUQ/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/111ebonMs90YLu/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/111ebonMs90YLu/giphy.gif')" alt="GIF">
+            </div>
+            <button type="button" onclick="closeModal('gifModal')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-muted); cursor:pointer;">Kapat</button>
+        </div>
+    </div>
+
+    <!-- Modal: Zengin Sticker (Çıkartma) Galerisi -->
     <div class="modal" id="stickerModal">
         <div class="modal-box" style="text-align:center;">
-            <h3>⭐ Çıkartma Seç</h3>
-            <p style="color:var(--text-muted); font-size:0.85rem; margin-top:5px;">Panoya hemen eklemek için bir çıkartma seç:</p>
-            <div class="sticker-picker">
-                <div class="sticker-option" onclick="addSticker('💖')">💖</div>
-                <div class="sticker-option" onclick="addSticker('🔥')">🔥</div>
-                <div class="sticker-option" onclick="addSticker('💀')">💀</div>
-                <div class="sticker-option" onclick="addSticker('👑')">👑</div>
-                <div class="sticker-option" onclick="addSticker('⭐')">⭐</div>
-                <div class="sticker-option" onclick="addSticker('🤡')">🤡</div>
-                <div class="sticker-option" onclick="addSticker('🚀')">🚀</div>
-                <div class="sticker-option" onclick="addSticker('🐈')">🐈</div>
+            <h3>⭐ Sticker Seç</h3>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-top:5px;">Duvara yapıştırmak için bir sticker seç:</p>
+            <div class="picker-grid" style="grid-template-columns: repeat(3, 1fr); max-height:280px; overflow-y:auto; padding:5px;">
+                <img src="https://api.iconify.design/fluent-emoji:fire.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:fire.svg')" alt="Fire">
+                <img src="https://api.iconify.design/fluent-emoji:100-percent.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:100-percent.svg')" alt="100">
+                <img src="https://api.iconify.design/fluent-emoji:clown-face.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:clown-face.svg')" alt="Clown">
+                <img src="https://api.iconify.design/fluent-emoji:crown.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:crown.svg')" alt="Crown">
+                <img src="https://api.iconify.design/fluent-emoji:skull.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:skull.svg')" alt="Skull">
+                <img src="https://api.iconify.design/fluent-emoji:sparkles.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:sparkles.svg')" alt="Sparkles">
+                <img src="https://api.iconify.design/fluent-emoji:rocket.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:rocket.svg')" alt="Rocket">
+                <img src="https://api.iconify.design/fluent-emoji:smiling-face-with-sunglasses.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:smiling-face-with-sunglasses.svg')" alt="Cool">
+                <img src="https://api.iconify.design/fluent-emoji:red-heart.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:red-heart.svg')" alt="Heart">
+                <img src="https://api.iconify.design/fluent-emoji:folded-hands.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:folded-hands.svg')" alt="Pray">
+                <img src="https://api.iconify.design/fluent-emoji:ghost.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:ghost.svg')" alt="Ghost">
+                <img src="https://api.iconify.design/fluent-emoji:star.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:star.svg')" alt="Star">
             </div>
-            <button type="button" onclick="closeModal('stickerModal')" style="background:none; border:none; width:100%; margin-top:10px; color:var(--text-muted); cursor:pointer;">Kapat</button>
+            <button type="button" onclick="closeModal('stickerModal')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-muted); cursor:pointer;">Kapat</button>
         </div>
     </div>
 
@@ -523,13 +559,13 @@
             }
 
             grid.innerHTML = items.map(item => {
-                if(item.type === 'polaroid') {
+                if(item.type === 'polaroid' || item.type === 'gif') {
                     return `
                         <div class="item-card">
                             <div class="tape"></div>
-                            <img src="${escapeHtml(item.url)}" class="polaroid-img" alt="Fotoğraf">
-                            <div class="card-caption">${escapeHtml(item.caption || '')}</div>
-                            <div class="card-author">~ ${escapeHtml(item.author)}</div>
+                            <img src="${escapeHtml(item.url)}" class="polaroid-img" alt="Görsel/GIF">
+                            ${item.caption ? `<div class="card-caption">${escapeHtml(item.caption)}</div>` : ''}
+                            <div class="card-author">~ ${escapeHtml(item.author || 'Aga')}</div>
                         </div>
                     `;
                 } else if(item.type === 'note') {
@@ -540,10 +576,10 @@
                             <div class="card-author" style="color: #666;">~ ${escapeHtml(item.author)}</div>
                         </div>
                     `;
-                } else if(item.type === 'sticker') {
+                } else if(item.type === 'stickerImg') {
                     return `
                         <div class="item-card" style="text-align:center; padding:1.5rem; background:rgba(255,255,255,0.6);">
-                            <div style="font-size:3.5rem; margin-bottom:5px;">${item.emoji}</div>
+                            <img src="${item.url}" style="width:70px; height:70px; object-fit:contain; margin-bottom:5px;" alt="Sticker">
                             <div class="card-author">Sticker</div>
                         </div>
                     `;
@@ -572,6 +608,20 @@
                     `;
                 }
             }).join('');
+        }
+
+        // Cihazdan Görsel Seçme Mantığı
+        let selectedBase64Image = "";
+        function handleImageSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                document.getElementById('fileNameDisplay').innerText = file.name;
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    selectedBase64Image = evt.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
         }
 
         // Çizim Tahtası Mantığı
@@ -621,13 +671,24 @@
             });
         }
 
-        function addSticker(emoji) {
+        function addStickerImage(url) {
             db.collection("muural_items").add({
-                type: 'sticker',
-                emoji: emoji,
+                type: 'stickerImg',
+                url: url,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
                 closeModal('stickerModal');
+            });
+        }
+
+        function addGif(url) {
+            db.collection("muural_items").add({
+                type: 'gif',
+                author: 'Aga',
+                url: url,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                closeModal('gifModal');
             });
         }
 
@@ -667,18 +728,24 @@
         // Veritabanına Ekleme Fonksiyonları
         function addPolaroid(e) {
             e.preventDefault();
+            if (!selectedBase64Image) {
+                alert("Lütfen cihazından bir fotoğraf seç!");
+                return;
+            }
             const newItem = {
                 type: 'polaroid',
                 author: document.getElementById('pAuthor').value,
-                url: document.getElementById('pUrl').value,
+                url: selectedBase64Image,
                 caption: document.getElementById('pCaption').value,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             };
             db.collection("muural_items").add(newItem).then(() => {
                 closeModal('polaroidModal');
                 document.getElementById('pAuthor').value = '';
-                document.getElementById('pUrl').value = '';
                 document.getElementById('pCaption').value = '';
+                document.getElementById('pImageFile').value = '';
+                document.getElementById('fileNameDisplay').innerText = 'Galeriden Seç';
+                selectedBase64Image = "";
             });
         }
 
