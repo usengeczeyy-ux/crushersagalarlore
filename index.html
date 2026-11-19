@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Straw Muural ✰ Ortak Anı Panosu</title>
+    <title>crushers agalar anı duvarı</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600;700&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -14,8 +14,8 @@
     <style>
         :root {
             --bg-main: #fcf6f0;
-            --bg-card: rgba(255, 255, 255, 0.85);
-            --border-color: rgba(0, 0, 0, 0.08);
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --border-color: rgba(0, 0, 0, 0.1);
             --primary: #ff6b8b;
             --primary-hover: #ff4770;
             --text-main: #2d3748;
@@ -26,46 +26,46 @@
 
         [data-theme="pastel"] {
             --bg-main: #fcf6f0;
-            --bg-card: rgba(255, 255, 255, 0.85);
-            --border-color: rgba(230, 210, 200, 0.5);
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --border-color: rgba(230, 210, 200, 0.6);
             --primary: #ff758c;
             --primary-hover: #ff526d;
             --text-main: #2d3748;
             --text-muted: #718096;
-            --accent-glow: rgba(255, 117, 140, 0.2);
+            --accent-glow: rgba(255, 117, 140, 0.25);
         }
 
         [data-theme="dark"] {
             --bg-main: #0f1016;
-            --bg-card: rgba(24, 26, 38, 0.85);
-            --border-color: rgba(255, 255, 255, 0.1);
+            --bg-card: rgba(24, 26, 38, 0.9);
+            --border-color: rgba(255, 255, 255, 0.12);
             --primary: #a855f7;
             --primary-hover: #9333ea;
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
-            --accent-glow: rgba(168, 85, 247, 0.25);
+            --accent-glow: rgba(168, 85, 247, 0.3);
         }
 
         [data-theme="y2k"] {
             --bg-main: #120024;
-            --bg-card: rgba(45, 0, 77, 0.8);
-            --border-color: rgba(255, 0, 128, 0.3);
+            --bg-card: rgba(45, 0, 77, 0.85);
+            --border-color: rgba(255, 0, 128, 0.4);
             --primary: #ff007f;
             --primary-hover: #e60073;
             --text-main: #00ffff;
             --text-muted: #ff80df;
-            --accent-glow: rgba(255, 0, 127, 0.4);
+            --accent-glow: rgba(255, 0, 127, 0.5);
         }
 
         [data-theme="cork"] {
             --bg-main: #c49a6c;
-            --bg-card: rgba(245, 230, 205, 0.9);
-            --border-color: rgba(139, 94, 60, 0.3);
+            --bg-card: rgba(245, 230, 205, 0.95);
+            --border-color: rgba(139, 94, 60, 0.4);
             --primary: #8b5e3c;
             --primary-hover: #6f472b;
             --text-main: #3d2612;
             --text-muted: #7d5b3d;
-            --accent-glow: rgba(139, 94, 60, 0.2);
+            --accent-glow: rgba(139, 94, 60, 0.3);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -75,9 +75,9 @@
             color: var(--text-main);
             min-height: 100vh;
             overflow-x: hidden;
-            background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
-            background-size: 24px 24px;
-            padding-bottom: 120px;
+            background-image: radial-gradient(var(--border-color) 1.5px, transparent 1.5px);
+            background-size: 20px 20px;
+            padding-bottom: 130px;
         }
 
         header {
@@ -91,14 +91,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
         }
 
         .logo-area { display: flex; align-items: center; gap: 10px; }
         .logo-badge {
             background: var(--primary);
             color: #fff;
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -110,11 +111,11 @@
         .board-title-input {
             background: transparent;
             border: none;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 800;
             color: var(--text-main);
             outline: none;
-            width: 240px;
+            width: 300px;
         }
 
         .header-actions { display: flex; align-items: center; gap: 10px; }
@@ -138,34 +139,33 @@
 
         .role-badge {
             font-size: 0.75rem;
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 20px;
             background: var(--accent-glow);
             color: var(--primary);
             font-weight: 800;
         }
 
-        /* Canvas Workspace */
+        /* Workspace */
         .workspace {
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 1rem;
             min-height: 70vh;
-            position: relative;
         }
 
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px;
+            gap: 24px;
         }
 
         .item-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 1rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            padding: 1.2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
             position: relative;
             backdrop-filter: blur(8px);
             transition: transform 0.2s;
@@ -177,10 +177,10 @@
             top: -10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
-            height: 22px;
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px dashed rgba(0,0,0,0.15);
+            width: 90px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px dashed rgba(0,0,0,0.18);
             z-index: 2;
         }
 
@@ -194,7 +194,7 @@
 
         .card-caption {
             font-family: 'Caveat', cursive;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             text-align: center;
             color: var(--text-main);
             margin-top: 5px;
@@ -208,19 +208,19 @@
             font-weight: 600;
         }
 
-        /* Music Player Card */
+        /* Music Card */
         .music-card {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 1rem;
+            padding: 1.2rem;
         }
         .vinyl-disc {
             width: 55px;
             height: 55px;
             background: #111;
             border-radius: 50%;
-            border: 3px dashed #444;
+            border: 3px dashed #555;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -240,12 +240,12 @@
             transform: translateX(-50%);
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            padding: 10px 20px;
+            padding: 10px 22px;
             border-radius: 40px;
             display: flex;
-            gap: 12px;
+            gap: 14px;
             backdrop-filter: blur(16px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 35px rgba(0,0,0,0.15);
             z-index: 100;
         }
 
@@ -253,17 +253,17 @@
             background: transparent;
             border: none;
             color: var(--text-main);
-            font-size: 1.1rem;
-            width: 42px;
-            height: 42px;
+            font-size: 1.15rem;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.2s;
         }
-        .tool-btn:hover { background: var(--accent-glow); color: var(--primary); }
+        .tool-btn:hover { background: var(--accent-glow); color: var(--primary); transform: scale(1.1); }
 
         /* Modal */
         .modal {
@@ -287,24 +287,43 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
         .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.40rem; color: var(--text-muted); }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--text-muted); }
         .form-group input, .form-group textarea, .form-group select {
-            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color);
+            width: 100%; background: rgba(255,255,255,0.06); border: 1px solid var(--border-color);
             padding: 0.75rem 1rem; border-radius: 10px; color: var(--text-main); outline: none;
         }
+
+        /* Sticker Grid */
+        .sticker-picker {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 1rem 0;
+        }
+        .sticker-option {
+            font-size: 2rem;
+            background: rgba(0,0,0,0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .sticker-option:hover { transform: scale(1.15); background: var(--accent-glow); }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo-area">
-            <div class="logo-badge"><i class="fa-solid fa-heart"></i></div>
-            <input type="text" id="boardTitle" class="board-title-input" value="straw muural ✰" readonly>
+            <div class="logo-badge"><i class="fa-solid fa-fire"></i></div>
+            <input type="text" id="boardTitle" class="board-title-input" value="crushers agalar anı duvarı" readonly>
         </div>
         <div class="header-actions">
             <span id="roleIndicator" class="role-badge">👑 Kurucu</span>
             <div id="themeContainer" style="display:none;">
-                <select id="themeSelect" onchange="changeTheme(this.value)" style="padding:5px 10px; border-radius:8px; background:var(--bg-card); color:var(--text-main); border:1px solid var(--border-color);">
+                <select id="themeSelect" onchange="changeTheme(this.value)" style="padding:6px 12px; border-radius:8px; background:var(--bg-card); color:var(--text-main); border:1px solid var(--border-color); font-weight:600;">
                     <option value="pastel">Pastel Pembe</option>
                     <option value="dark">Gece Modu</option>
                     <option value="y2k">Y2K Kaos</option>
@@ -318,7 +337,7 @@
     <div class="workspace">
         <div id="itemsGrid" class="grid-container">
             <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: var(--text-muted);">
-                Panolar yükleniyor...
+                Anılar yükleniyor...
             </div>
         </div>
     </div>
@@ -326,8 +345,10 @@
     <!-- Floating Action Toolbar -->
     <div class="floating-toolbar">
         <button class="tool-btn" onclick="openModal('polaroidModal')" title="Polaroid Fotoğraf Ekle"><i class="fa-solid fa-camera"></i></button>
-        <button class="tool-btn" onclick="openModal('noteModal')" title="Not Ekle"><i class="fa-solid fa-note-sticky"></i></button>
-        <button class="tool-btn" onclick="openModal('musicModal')" title="Şarkı/Müzik Ekle"><i class="fa-solid fa-music"></i></button>
+        <button class="tool-btn" onclick="openModal('noteModal')" title="Mini Not Ekle"><i class="fa-solid fa-note-sticky"></i></button>
+        <button class="tool-btn" onclick="openModal('stickerModal')" title="Çıkartma Ekle"><i class="fa-solid fa-face-smile"></i></button>
+        <button class="tool-btn" onclick="openModal('drawingModal')" title="Çizim Yap & Ekle"><i class="fa-solid fa-pen-nib"></i></button>
+        <button class="tool-btn" onclick="openModal('musicModal')" title="Şarkı Kartı Ekle"><i class="fa-solid fa-music"></i></button>
     </div>
 
     <!-- Modal: Polaroid -->
@@ -337,7 +358,7 @@
             <form onsubmit="addPolaroid(event)">
                 <div class="form-group" style="margin-top:1rem;">
                     <label>Adın / Takma Adın</label>
-                    <input type="text" id="pAuthor" required placeholder="Örn: Zeynep">
+                    <input type="text" id="pAuthor" required placeholder="Örn: Agalardan Biri">
                 </div>
                 <div class="form-group">
                     <label>Fotoğraf URL (Görsel Adresi)</label>
@@ -369,6 +390,44 @@
                 <button type="submit" class="btn" style="width:100%; justify-content:center;">Notu Yapıştır</button>
                 <button type="button" onclick="closeModal('noteModal')" style="background:none; border:none; width:100%; margin-top:10px; color:var(--text-muted); cursor:pointer;">İptal</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Modal: Çıkartma (Sticker) -->
+    <div class="modal" id="stickerModal">
+        <div class="modal-box" style="text-align:center;">
+            <h3>⭐ Çıkartma Seç</h3>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-top:5px;">Panoya hemen eklemek için bir çıkartma seç:</p>
+            <div class="sticker-picker">
+                <div class="sticker-option" onclick="addSticker('💖')">💖</div>
+                <div class="sticker-option" onclick="addSticker('🔥')">🔥</div>
+                <div class="sticker-option" onclick="addSticker('💀')">💀</div>
+                <div class="sticker-option" onclick="addSticker('👑')">👑</div>
+                <div class="sticker-option" onclick="addSticker('⭐')">⭐</div>
+                <div class="sticker-option" onclick="addSticker('🤡')">🤡</div>
+                <div class="sticker-option" onclick="addSticker('🚀')">🚀</div>
+                <div class="sticker-option" onclick="addSticker('🐈')">🐈</div>
+            </div>
+            <button type="button" onclick="closeModal('stickerModal')" style="background:none; border:none; width:100%; margin-top:10px; color:var(--text-muted); cursor:pointer;">Kapat</button>
+        </div>
+    </div>
+
+    <!-- Modal: Çizim -->
+    <div class="modal" id="drawingModal">
+        <div class="modal-box">
+            <h3>🎨 Hızlı Çizim Yap</h3>
+            <div class="form-group" style="margin-top:1rem;">
+                <label>Adın / Takma Adın</label>
+                <input type="text" id="dAuthor" required placeholder="Çizen kişi...">
+            </div>
+            <div style="margin: 10px 0; border: 1px solid var(--border-color); border-radius: 10px; overflow:hidden; background:#fff;">
+                <canvas id="paintCanvas" width="410" height="200" style="display:block; cursor:crosshair; touch-action:none;"></canvas>
+            </div>
+            <div style="display:flex; gap:10px; margin-bottom:1rem;">
+                <button type="button" onclick="clearCanvas()" style="background:rgba(255,0,0,0.1); color:red; border:none; padding:6px 12px; border-radius:8px; font-weight:700; cursor:pointer;">Temizle</button>
+            </div>
+            <button type="button" onclick="saveDrawing()" class="btn" style="width:100%; justify-content:center;">Çizimi Panoya Ekle</button>
+            <button type="button" onclick="closeModal('drawingModal')" style="background:none; border:none; width:100%; margin-top:10px; color:var(--text-muted); cursor:pointer;">İptal</button>
         </div>
     </div>
 
@@ -475,10 +534,25 @@
                     `;
                 } else if(item.type === 'note') {
                     return `
-                        <div class="item-card" style="background: rgba(255, 248, 196, 0.9); color: #333;">
+                        <div class="item-card" style="background: rgba(255, 248, 196, 0.95); color: #333;">
                             <div class="tape" style="background: rgba(200,200,200,0.5);"></div>
-                            <div style="font-family:'Caveat', cursive; font-size:1.4rem; line-height:1.4; word-break:break-word;">${escapeHtml(item.content)}</div>
+                            <div style="font-family:'Caveat', cursive; font-size:1.45rem; line-height:1.4; word-break:break-word;">${escapeHtml(item.content)}</div>
                             <div class="card-author" style="color: #666;">~ ${escapeHtml(item.author)}</div>
+                        </div>
+                    `;
+                } else if(item.type === 'sticker') {
+                    return `
+                        <div class="item-card" style="text-align:center; padding:1.5rem; background:rgba(255,255,255,0.6);">
+                            <div style="font-size:3.5rem; margin-bottom:5px;">${item.emoji}</div>
+                            <div class="card-author">Sticker</div>
+                        </div>
+                    `;
+                } else if(item.type === 'drawing') {
+                    return `
+                        <div class="item-card">
+                            <div class="tape"></div>
+                            <img src="${item.url}" class="polaroid-img" style="background:#fff;" alt="Çizim">
+                            <div class="card-author">Çizen: ~ ${escapeHtml(item.author)}</div>
                         </div>
                     `;
                 } else if(item.type === 'music') {
@@ -498,6 +572,63 @@
                     `;
                 }
             }).join('');
+        }
+
+        // Çizim Tahtası Mantığı
+        const canvas = document.getElementById('paintCanvas');
+        const ctx = canvas.getContext('2d');
+        let painting = false;
+
+        function startPosition(e) { painting = true; draw(e); }
+        function endPosition() { painting = false; ctx.beginPath(); }
+        function draw(e) {
+            if (!painting) return;
+            ctx.lineWidth = 4;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#000';
+
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        canvas.addEventListener('mousedown', startPosition);
+        canvas.addEventListener('mouseup', endPosition);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('touchstart', startPosition);
+        canvas.addEventListener('touchend', endPosition);
+        canvas.addEventListener('touchmove', draw);
+
+        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+        function saveDrawing() {
+            const author = document.getElementById('dAuthor').value.trim() || "Biri";
+            const dataUrl = canvas.toDataURL();
+            db.collection("muural_items").add({
+                type: 'drawing',
+                author: author,
+                url: dataUrl,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                closeModal('drawingModal');
+                clearCanvas();
+                document.getElementById('dAuthor').value = '';
+            });
+        }
+
+        function addSticker(emoji) {
+            db.collection("muural_items").add({
+                type: 'sticker',
+                emoji: emoji,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                closeModal('stickerModal');
+            });
         }
 
         let currentPlayingAudio = null;
