@@ -145,7 +145,6 @@
             font-weight: 800;
         }
 
-        /* Devasa Değiştirilebilir ve Zoom Alınabilir Tuval Alanı */
         .viewport {
             position: absolute;
             top: 65px;
@@ -165,7 +164,6 @@
             transition: transform 0.05s ease-out;
         }
 
-        /* Zoom Kontrol Paneli */
         .zoom-controls {
             position: fixed;
             right: 25px;
@@ -196,7 +194,6 @@
         }
         .zoom-btn:hover { background: var(--accent-glow); color: var(--primary); }
 
-        /* Serbest Hareket Eden Kartlar */
         .draggable-card {
             position: absolute;
             background: var(--bg-card);
@@ -204,12 +201,12 @@
             border-radius: 16px;
             padding: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            cursor: grab;
             user-select: none;
             backdrop-filter: blur(8px);
             z-index: 10;
         }
-        .draggable-card:active { cursor: grabbing; z-index: 100; }
+        .draggable-card.draggable { cursor: grab; }
+        .draggable-card.draggable:active { cursor: grabbing; z-index: 100; }
 
         .tape {
             position: absolute;
@@ -269,7 +266,6 @@
         .font-pixel { font-family: 'Press Start 2P', monospace; font-size: 0.75rem; line-height: 1.5; }
         .font-sans { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem; }
 
-        /* Floating Toolbar */
         .floating-toolbar {
             position: fixed;
             bottom: 25px;
@@ -302,7 +298,6 @@
         }
         .tool-btn:hover { background: var(--accent-glow); color: var(--primary); transform: scale(1.1); }
 
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -350,15 +345,14 @@
         }
         .sticker-item {
             font-size: 2.2rem;
-            background: rgba(0,0,0,0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+            background: transparent;
+            border: none;
             padding: 8px;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
+            transition: transform 0.2s;
         }
-        .sticker-item:hover { transform: scale(1.15); background: var(--accent-glow); }
+        .sticker-item:hover { transform: scale(1.25); }
         
         .gif-grid {
             display: grid;
@@ -397,14 +391,12 @@
         </div>
     </header>
 
-    <!-- Zoom Kontrol Butonları -->
     <div class="zoom-controls">
         <button class="zoom-btn" onclick="zoomIn()" title="Yakınlaştır"><i class="fa-solid fa-plus"></i></button>
         <button class="zoom-btn" onclick="zoomOut()" title="Uzaklaştır"><i class="fa-solid fa-minus"></i></button>
         <button class="zoom-btn" onclick="zoomReset()" title="Sıfırla"><i class="fa-solid fa-rotate-left"></i></button>
     </div>
 
-    <!-- Devasa Kaydırılabilir Viewport -->
     <div class="viewport" id="viewport">
         <div class="workspace" id="workspace">
             <div style="position:absolute; left: 1600px; top: 1600px; text-align: center; color: var(--text-muted);">
@@ -413,7 +405,6 @@
         </div>
     </div>
 
-    <!-- Floating Action Toolbar -->
     <div class="floating-toolbar">
         <button class="tool-btn" onclick="openModal('polaroidModal')" title="Polaroid Fotoğraf Ekle"><i class="fa-solid fa-camera"></i></button>
         <button class="tool-btn" onclick="openModal('noteModal')" title="Mini Not Ekle"><i class="fa-solid fa-note-sticky"></i></button>
@@ -464,6 +455,13 @@
                         <option value="font-vt323">Daktilo / Retro</option>
                         <option value="font-pixel">Piksel (Oyun Tarzı)</option>
                         <option value="font-sans">Modern / Düz</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Görünüm / Arka Plan</label>
+                    <select id="nBgStyle">
+                        <option value="styled">Arka Planlı (Instagram Story Tarzı)</option>
+                        <option value="transparent">Şeffaf (Arkaplansız / Düz Metin)</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -518,37 +516,37 @@
             <h3>⭐ Sticker Seçimi</h3>
             <p style="color:var(--text-muted); font-size:0.85rem; margin-top:5px;">Duvara yapıştırmak için bir çıkartma seç:</p>
             <div class="picker-grid">
-                <div class="sticker-item" onclick="addSticker('💖')">💖</div>
-                <div class="sticker-item" onclick="addSticker('🔥')">🔥</div>
-                <div class="sticker-item" onclick="addSticker('💀')">💀</div>
-                <div class="sticker-item" onclick="addSticker('👑')">👑</div>
-                <div class="sticker-item" onclick="addSticker('⭐')">⭐</div>
-                <div class="sticker-item" onclick="addSticker('🤡')">🤡</div>
-                <div class="sticker-item" onclick="addSticker('🚀')">🚀</div>
-                <div class="sticker-item" onclick="addSticker('🐈')">🐈</div>
-                <div class="sticker-item" onclick="addSticker('😎')">😎</div>
-                <div class="sticker-item" onclick="addSticker('🎉')">🎉</div>
-                <div class="sticker-item" onclick="addSticker('💯')">💯</div>
-                <div class="sticker-item" onclick="addSticker('⚡')">⚡</div>
-                <div class="sticker-item" onclick="addSticker('🎯')">🎯</div>
-                <div class="sticker-item" onclick="addSticker('🧠')">🧠</div>
-                <div class="sticker-item" onclick="addSticker('🍻')">🍻</div>
-                <div class="sticker-item" onclick="addSticker('🎮')">🎮</div>
-                <div class="sticker-item" onclick="addSticker('🎸')">🎸</div>
-                <div class="sticker-item" onclick="addSticker('🍕')">🍕</div>
-                <div class="sticker-item" onclick="addSticker('🧊')">🧊</div>
-                <div class="sticker-item" onclick="addSticker('🕶️')">🕶️</div>
-                <div class="sticker-item" onclick="addSticker('🧨')">🧨</div>
-                <div class="sticker-item" onclick="addSticker('🏆')">🏆</div>
-                <div class="sticker-item" onclick="addSticker('💎')">💎</div>
-                <div class="sticker-item" onclick="addSticker('👻')">👻</div>
-                <div class="sticker-item" onclick="addSticker('🦄')">🦄</div>
-                <div class="sticker-item" onclick="addSticker('🛸')">🛸</div>
-                <div class="sticker-item" onclick="addSticker('👾')">👾</div>
-                <div class="sticker-item" onclick="addSticker('🥑')">🥑</div>
-                <div class="sticker-item" onclick="addSticker('🍩')">🍩</div>
-                <div class="sticker-item" onclick="addSticker('🍔')">🍔</div>
-                <div class="sticker-item" onclick="addSticker('🍿')">🍿</div>
+                <button class="sticker-item" onclick="addSticker('💖')">💖</button>
+                <button class="sticker-item" onclick="addSticker('🔥')">🔥</button>
+                <button class="sticker-item" onclick="addSticker('💀')">💀</button>
+                <button class="sticker-item" onclick="addSticker('👑')">👑</button>
+                <button class="sticker-item" onclick="addSticker('⭐')">⭐</button>
+                <button class="sticker-item" onclick="addSticker('🤡')">🤡</button>
+                <button class="sticker-item" onclick="addSticker('🚀')">🚀</button>
+                <button class="sticker-item" onclick="addSticker('🐈')">🐈</button>
+                <button class="sticker-item" onclick="addSticker('😎')">😎</button>
+                <button class="sticker-item" onclick="addSticker('🎉')">🎉</button>
+                <button class="sticker-item" onclick="addSticker('💯')">💯</button>
+                <button class="sticker-item" onclick="addSticker('⚡')">⚡</button>
+                <button class="sticker-item" onclick="addSticker('🎯')">🎯</button>
+                <button class="sticker-item" onclick="addSticker('🧠')">🧠</button>
+                <button class="sticker-item" onclick="addSticker('🍻')">🍻</button>
+                <button class="sticker-item" onclick="addSticker('🎮')">🎮</button>
+                <button class="sticker-item" onclick="addSticker('🎸')">🎸</button>
+                <button class="sticker-item" onclick="addSticker('🍕')">🍕</button>
+                <button class="sticker-item" onclick="addSticker('🧊')">🧊</button>
+                <button class="sticker-item" onclick="addSticker('🕶️')">🕶️</button>
+                <button class="sticker-item" onclick="addSticker('🧨')">🧨</button>
+                <button class="sticker-item" onclick="addSticker('🏆')">🏆</button>
+                <button class="sticker-item" onclick="addSticker('💎')">💎</button>
+                <button class="sticker-item" onclick="addSticker('👻')">👻</button>
+                <button class="sticker-item" onclick="addSticker('🦄')">🦄</button>
+                <button class="sticker-item" onclick="addSticker('🛸')">🛸</button>
+                <button class="sticker-item" onclick="addSticker('👾')">👾</button>
+                <button class="sticker-item" onclick="addSticker('🥑')">🥑</button>
+                <button class="sticker-item" onclick="addSticker('🍩')">🍩</button>
+                <button class="sticker-item" onclick="addSticker('🍔')">🍔</button>
+                <button class="sticker-item" onclick="addSticker('🍿')">🍿</button>
             </div>
             <button type="button" onclick="closeModal('stickerModal')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-muted); cursor:pointer;">Kapat</button>
         </div>
@@ -581,12 +579,12 @@
                     <input type="text" id="mAuthor" required placeholder="Örn: Can">
                 </div>
                 <div class="form-group">
-                    <label>Şarkı Adı ve Sanatçı</label>
-                    <input type="text" id="mTitle" required placeholder="Örn: Duman - Belki Alışman Lazım">
+                    <label>Şarkı Bağlantısı (Spotify, Apple Music veya YouTube Linki)</label>
+                    <input type="url" id="mUrl" required placeholder="https://open.spotify.com/track/... veya https://youtu.be/..." oninput="autoDetectMusicEmbed(this.value)">
                 </div>
                 <div class="form-group">
-                    <label>Şarkı Bağlantısı (Spotify, Apple Music veya YouTube Linki)</label>
-                    <input type="url" id="mUrl" required placeholder="https://open.spotify.com/track/... veya https://youtu.be/...">
+                    <label>Oynatıcı Önizleme / Kod (Otomatik Oluşur)</label>
+                    <input type="text" id="mEmbed" required placeholder="Bağlantı girildiğinde otomatik ayarlanır" readonly style="background:rgba(0,0,0,0.05);">
                 </div>
                 <button type="submit" class="btn" style="width:100%; justify-content:center;">Şarkı Kartını Ekle</button>
                 <button type="button" onclick="closeModal('musicModal')" style="background:none; border:none; width:100%; margin-top:10px; color:var(--text-muted); cursor:pointer;">İptal</button>
@@ -627,7 +625,6 @@
             document.getElementById('themeContainer').style.display = "none";
         }
 
-        // Zoom Yönetimi
         let currentZoom = 1;
         const workspaceEl = document.getElementById('workspace');
 
@@ -682,8 +679,9 @@
             }
 
             workspace.innerHTML = items.map(item => {
-                const canDelete = isOwner || item.deviceId === deviceId;
-                const deleteBtnHtml = canDelete ? `<button class="delete-btn" onclick="deleteItem('${item.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>` : '';
+                const canModify = isOwner || item.deviceId === deviceId;
+                const deleteBtnHtml = canModify ? `<button class="delete-btn" onclick="deleteItem('${item.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>` : '';
+                const draggableClass = canModify ? 'draggable' : '';
 
                 const posX = item.x || 1600 + (Math.random() * 400 - 200);
                 const posY = item.y || 1600 + (Math.random() * 400 - 200);
@@ -708,16 +706,28 @@
                     `;
                 } else if(item.type === 'note') {
                     const fontClass = item.font || 'font-caveat';
-                    contentHtml = `
-                        <div style="background: rgba(255, 248, 196, 0.98); color: #333; padding: 15px; border-radius: 12px; min-width: 180px; max-width: 240px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                            <div class="${fontClass}" style="line-height:1.4; word-break:break-word;">${escapeHtml(item.content)}</div>
-                            <div class="card-author" style="color: #666; margin-top:8px;">~ ${escapeHtml(item.author)}</div>
-                        </div>
-                    `;
+                    if(item.bgStyle === 'transparent') {
+                        // Şeffaf, arkaplansız düz metin görünümü
+                        contentHtml = `
+                            <div style="padding: 8px; min-width: 140px; max-width: 240px;">
+                                <div class="${fontClass}" style="line-height:1.4; word-break:break-word; color:var(--text-main);">${escapeHtml(item.content)}</div>
+                                <div class="card-author" style="color:var(--text-muted); margin-top:6px; font-size:0.8rem;">~ ${escapeHtml(item.author)}</div>
+                            </div>
+                        `;
+                    } else {
+                        // Instagram Story Tarzı Arka Planlı Not
+                        contentHtml = `
+                            <div style="background: rgba(255, 248, 196, 0.98); color: #333; padding: 15px; border-radius: 12px; min-width: 180px; max-width: 240px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                                <div class="${fontClass}" style="line-height:1.4; word-break:break-word;">${escapeHtml(item.content)}</div>
+                                <div class="card-author" style="color: #666; margin-top:8px;">~ ${escapeHtml(item.author)}</div>
+                            </div>
+                        `;
+                    }
                 } else if(item.type === 'sticker') {
-                    contentHtml = `
-                        <div style="text-align:center; padding:10px;">
-                            <div style="font-size:3.5rem;">${item.emoji}</div>
+                    return `
+                        <div class="draggable-card ${draggableClass}" id="card-${item.id}" style="left: ${posX}px; top: ${posY}px; background: transparent; border: none; box-shadow: none; padding: 0;" ${canModify ? `onmousedown="startDrag(event, '${item.id}')" ontouchstart="startDrag(event, '${item.id}')"` : ''}>
+                            ${deleteBtnHtml}
+                            <div style="font-size: 4.5rem; text-shadow: 0 4px 10px rgba(0,0,0,0.15);">${item.emoji}</div>
                         </div>
                     `;
                 } else if(item.type === 'drawing') {
@@ -729,21 +739,17 @@
                     `;
                 } else if(item.type === 'music') {
                     contentHtml = `
-                        <div style="display:flex; align-items:center; gap:12px; padding:10px; min-width:220px;">
-                            <div style="width:45px; height:45px; background:var(--primary); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.2rem; flex-shrink:0;">
-                                <i class="fa-solid fa-music"></i>
-                            </div>
-                            <div style="overflow:hidden;">
-                                <div style="font-weight:700; font-size:0.85rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(item.title)}</div>
-                                <div style="font-size:0.7rem; color:var(--text-muted);">Ekleyen: ${escapeHtml(item.author)}</div>
-                                <a href="${escapeHtml(item.url)}" target="_blank" style="display:inline-block; font-size:0.7rem; color:#fff; background:var(--primary); padding:3px 8px; border-radius:6px; text-decoration:none; margin-top:5px; font-weight:700;">▶ Dinle / Aç</a>
+                        <div style="width: 260px; padding: 5px;">
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px; font-weight:700;">🎵 ${escapeHtml(item.author)} ekledi</div>
+                            <div style="border-radius: 12px; overflow: hidden; background: rgba(0,0,0,0.04);">
+                                ${item.embedHtml}
                             </div>
                         </div>
                     `;
                 }
 
                 return `
-                    <div class="draggable-card" id="card-${item.id}" style="left: ${posX}px; top: ${posY}px;" onmousedown="startDrag(event, '${item.id}')" ontouchstart="startDrag(event, '${item.id}')">
+                    <div class="draggable-card ${draggableClass}" id="card-${item.id}" style="left: ${posX}px; top: ${posY}px;" ${canModify ? `onmousedown="startDrag(event, '${item.id}')" ontouchstart="startDrag(event, '${item.id}')"` : ''}>
                         <div class="tape"></div>
                         ${deleteBtnHtml}
                         ${contentHtml}
@@ -752,12 +758,11 @@
             }).join('');
         }
 
-        // Sürükle Bırak Mantığı (Zoom Oranı Dahil)
         let activeCardId = null;
         let startX = 0, startY = 0;
 
         function startDrag(e, id) {
-            if (e.target.closest('.delete-btn') || e.target.closest('button') || e.target.closest('a')) return;
+            if (e.target.closest('.delete-btn') || e.target.closest('button') || e.target.closest('a') || e.target.closest('iframe')) return;
             activeCardId = id;
             const card = document.getElementById(`card-${id}`);
             card.style.zIndex = 500;
@@ -780,7 +785,7 @@
             if (!card) return;
 
             const clientX = e.clientX || e.touches[0].clientX;
-            const clientY = e.clientY || e.touches[0].clientY;
+            const clientY = e.touches[0].clientY;
 
             let newX = (clientX / currentZoom) - startX;
             let newY = (clientY / currentZoom) - startY;
@@ -899,7 +904,7 @@
             e.preventDefault();
             db.collection("muural_items").add({
                 type: 'note', author: document.getElementById('nAuthor').value,
-                content: document.getElementById('nContent').value, font: document.getElementById('nFont').value, deviceId: deviceId,
+                content: document.getElementById('nContent').value, font: document.getElementById('nFont').value, bgStyle: document.getElementById('nBgStyle').value, deviceId: deviceId,
                 x: 1600 + (Math.random() * 400 - 200), y: 1600 + (Math.random() * 400 - 200),
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
@@ -909,18 +914,49 @@
             });
         }
 
+        // Müzik Linklerini Site İçi Mini Oynatıcıya (Embed) Çevirme
+        function autoDetectMusicEmbed(url) {
+            let embedHtml = "";
+            if (url.includes("spotify.com")) {
+                let trackId = url.split("track/")[1]?.split("?")[0];
+                if (trackId) {
+                    embedHtml = `<iframe src="https://open.spotify.com/embed/track/${trackId}?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+                }
+            } else if (url.includes("apple.com")) {
+                let embedUrl = url.replace("music.apple.com", "embed.music.apple.com");
+                embedHtml = `<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="150" style="width:100%;max-width:400px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation" src="${embedUrl}"></iframe>`;
+            } else if (url.includes("youtu.be") || url.includes("youtube.com")) {
+                let videoId = "";
+                if(url.includes("youtu.be/")) videoId = url.split("youtu.be/")[1]?.split("?")[0];
+                else if(url.includes("watch?v=")) videoId = url.split("watch?v=")[1]?.split("&")[0];
+                if(videoId) {
+                    embedHtml = `<iframe width="100%" height="140" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                }
+            }
+
+            if(!embedHtml) {
+                // Genel web linki fallback
+                embedHtml = `<div style="padding:12px; text-align:center;"><a href="${url}" target="_blank" style="color:var(--primary); font-weight:700; text-decoration:none;"><i class="fa-solid fa-play"></i> Şarkıyı Aç / Dinle</a></div>`;
+            }
+            document.getElementById('mEmbed').value = embedHtml;
+        }
+
         function addMusic(e) {
             e.preventDefault();
+            const url = document.getElementById('mUrl').value;
+            const embedHtml = document.getElementById('mEmbed').value;
+            if(!embedHtml) { alert("Geçerli bir müzik linki gir!"); return; }
+
             db.collection("muural_items").add({
                 type: 'music', author: document.getElementById('mAuthor').value,
-                title: document.getElementById('mTitle').value, url: document.getElementById('mUrl').value, deviceId: deviceId,
+                url: url, embedHtml: embedHtml, deviceId: deviceId,
                 x: 1600 + (Math.random() * 400 - 200), y: 1600 + (Math.random() * 400 - 200),
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
                 closeModal('musicModal');
                 document.getElementById('mAuthor').value = '';
-                document.getElementById('mTitle').value = '';
                 document.getElementById('mUrl').value = '';
+                document.getElementById('mEmbed').value = '';
             });
         }
 
@@ -928,7 +964,7 @@
             const baseUrl = window.location.href.split('?')[0];
             const guestUrl = `${baseUrl}?guest=true`;
             navigator.clipboard.writeText(guestUrl).then(() => {
-                alert("Paylaşım linki kopyalandı! Arkadaşların bu linkle girip devasa alanda içerikleri dilediği gibi gezip sürükleyebilir.");
+                alert("Paylaşım linki kopyalandı! Arkadaşlar sadece kendi ekledikleri öğeleri hareket ettirebilir ve site içinde müzik dinleyebilir.");
             });
         }
 
