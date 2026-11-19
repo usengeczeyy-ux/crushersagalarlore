@@ -74,19 +74,18 @@
             background-color: var(--bg-main);
             color: var(--text-main);
             min-height: 100vh;
-            overflow-x: hidden;
-            background-image: radial-gradient(var(--border-color) 1.5px, transparent 1.5px);
-            background-size: 20px 20px;
-            padding-bottom: 130px;
+            overflow: hidden;
         }
 
         header {
             background: var(--bg-card);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 100;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
             padding: 0.8rem 1.5rem;
             display: flex;
             justify-content: space-between;
@@ -146,13 +145,56 @@
             font-weight: 800;
         }
 
-        /* Serbest Tuval Alanı */
+        /* Devasa Değiştirilebilir ve Zoom Alınabilir Tuval Alanı */
+        .viewport {
+            position: absolute;
+            top: 65px;
+            left: 0;
+            width: 100vw;
+            height: calc(100vh - 65px);
+            overflow: auto;
+            background-image: radial-gradient(var(--border-color) 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+
         .workspace {
             position: relative;
-            width: 100%;
-            min-height: 80vh;
-            overflow: hidden;
+            width: 3500px;
+            height: 3500px;
+            transform-origin: 0 0;
+            transition: transform 0.05s ease-out;
         }
+
+        /* Zoom Kontrol Paneli */
+        .zoom-controls {
+            position: fixed;
+            right: 25px;
+            top: 85px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 6px;
+            backdrop-filter: blur(10px);
+            z-index: 900;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .zoom-btn {
+            background: transparent;
+            border: none;
+            width: 36px;
+            height: 36px;
+            font-size: 1rem;
+            color: var(--text-main);
+            cursor: pointer;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .zoom-btn:hover { background: var(--accent-glow); color: var(--primary); }
 
         /* Serbest Hareket Eden Kartlar */
         .draggable-card {
@@ -165,10 +207,9 @@
             cursor: grab;
             user-select: none;
             backdrop-filter: blur(8px);
-            transition: box-shadow 0.2s;
             z-index: 10;
         }
-        .draggable-card:active { cursor: grabbing; box-shadow: 0 15px 35px rgba(0,0,0,0.15); z-index: 50; }
+        .draggable-card:active { cursor: grabbing; z-index: 100; }
 
         .tape {
             position: absolute;
@@ -202,7 +243,6 @@
         }
         .delete-btn:hover { background: #ff4770; color: #fff; transform: scale(1.1); }
 
-        /* Polaroid Çerçeve Tasarımı */
         .polaroid-frame {
             background: #fff;
             padding: 10px 10px 25px 10px;
@@ -224,7 +264,6 @@
             margin-top: 8px;
         }
 
-        /* Font Tanımları */
         .font-caveat { font-family: 'Caveat', cursive; font-size: 1.4rem; }
         .font-vt323 { font-family: 'VT323', monospace; font-size: 1.5rem; letter-spacing: 1px; }
         .font-pixel { font-family: 'Press Start 2P', monospace; font-size: 0.75rem; line-height: 1.5; }
@@ -244,7 +283,7 @@
             gap: 14px;
             backdrop-filter: blur(16px);
             box-shadow: 0 10px 35px rgba(0,0,0,0.15);
-            z-index: 100;
+            z-index: 1000;
         }
 
         .tool-btn {
@@ -270,7 +309,7 @@
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6);
             backdrop-filter: blur(6px);
-            z-index: 1000;
+            z-index: 2000;
             align-items: center;
             justify-content: center;
             padding: 1rem;
@@ -358,9 +397,19 @@
         </div>
     </header>
 
-    <div class="workspace" id="workspace">
-        <div style="text-align: center; padding: 4rem; color: var(--text-muted);">
-            Anılar yükleniyor...
+    <!-- Zoom Kontrol Butonları -->
+    <div class="zoom-controls">
+        <button class="zoom-btn" onclick="zoomIn()" title="Yakınlaştır"><i class="fa-solid fa-plus"></i></button>
+        <button class="zoom-btn" onclick="zoomOut()" title="Uzaklaştır"><i class="fa-solid fa-minus"></i></button>
+        <button class="zoom-btn" onclick="zoomReset()" title="Sıfırla"><i class="fa-solid fa-rotate-left"></i></button>
+    </div>
+
+    <!-- Devasa Kaydırılabilir Viewport -->
+    <div class="viewport" id="viewport">
+        <div class="workspace" id="workspace">
+            <div style="position:absolute; left: 1600px; top: 1600px; text-align: center; color: var(--text-muted);">
+                Anılar yükleniyor...
+            </div>
         </div>
     </div>
 
@@ -374,7 +423,7 @@
         <button class="tool-btn" onclick="openModal('musicModal')" title="Şarkı Kartı Ekle"><i class="fa-solid fa-music"></i></button>
     </div>
 
-    <!-- Modal: Polaroid -->
+    <!-- Modals -->
     <div class="modal" id="polaroidModal">
         <div class="modal-box">
             <h3>📸 Polaroid Çerçeveli Fotoğraf Ekle</h3>
@@ -400,7 +449,6 @@
         </div>
     </div>
 
-    <!-- Modal: Not & Font Seçimi -->
     <div class="modal" id="noteModal">
         <div class="modal-box">
             <h3>📝 Mini Not Ekle</h3>
@@ -428,7 +476,6 @@
         </div>
     </div>
 
-    <!-- Modal: GIF -->
     <div class="modal" id="gifModal">
         <div class="modal-box" style="text-align:center;">
             <h3>🎬 GIF Arşivi</h3>
@@ -466,7 +513,6 @@
         </div>
     </div>
 
-    <!-- Modal: Sticker -->
     <div class="modal" id="stickerModal">
         <div class="modal-box" style="text-align:center;">
             <h3>⭐ Sticker Seçimi</h3>
@@ -508,7 +554,6 @@
         </div>
     </div>
 
-    <!-- Modal: Çizim -->
     <div class="modal" id="drawingModal">
         <div class="modal-box">
             <h3>🎨 Hızlı Çizim Yap</h3>
@@ -527,7 +572,6 @@
         </div>
     </div>
 
-    <!-- Modal: Müzik (Spotify, Apple Music, YouTube Linki) -->
     <div class="modal" id="musicModal">
         <div class="modal-box">
             <h3>💿 Şarkı Kartı Ekle (Spotify / Apple Music / YouTube)</h3>
@@ -551,7 +595,6 @@
     </div>
 
     <script>
-        // FIREBASE CONFIGURATION
         const firebaseConfig = {
             apiKey: "AIzaSyCwN2Ij9zwG2JFxuxHudvOmSl1peH2ClWo",
             authDomain: "crushersagalarlore.firebaseapp.com",
@@ -582,6 +625,23 @@
         } else {
             document.getElementById('roleIndicator').innerText = "🎨 Arkadaş (Misafir)";
             document.getElementById('themeContainer').style.display = "none";
+        }
+
+        // Zoom Yönetimi
+        let currentZoom = 1;
+        const workspaceEl = document.getElementById('workspace');
+
+        function zoomIn() {
+            currentZoom = Math.min(currentZoom + 0.15, 2);
+            workspaceEl.style.transform = `scale(${currentZoom})`;
+        }
+        function zoomOut() {
+            currentZoom = Math.max(currentZoom - 0.15, 0.4);
+            workspaceEl.style.transform = `scale(${currentZoom})`;
+        }
+        function zoomReset() {
+            currentZoom = 1;
+            workspaceEl.style.transform = `scale(${currentZoom})`;
         }
 
         function changeTheme(themeName) {
@@ -617,7 +677,7 @@
         function renderItems(items) {
             const workspace = document.getElementById('workspace');
             if(items.length === 0) {
-                workspace.innerHTML = `<div style="text-align: center; padding: 4rem; color: var(--text-muted);">Henüz bir şey eklenmemiş. Alttaki butonlarla ilk hatırayı sen ekle!</div>`;
+                workspace.innerHTML = `<div style="position:absolute; left: 1600px; top: 1600px; text-align: center; color: var(--text-muted);">Henüz bir şey eklenmemiş. Alttaki butonlarla ilk hatırayı sen ekle!</div>`;
                 return;
             }
 
@@ -625,9 +685,8 @@
                 const canDelete = isOwner || item.deviceId === deviceId;
                 const deleteBtnHtml = canDelete ? `<button class="delete-btn" onclick="deleteItem('${item.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>` : '';
 
-                // Konum koordinatları (Varsayılan olarak rastgele veya kayıtlı konum)
-                const posX = item.x || 80 + (Math.random() * 600);
-                const posY = item.y || 80 + (Math.random() * 300);
+                const posX = item.x || 1600 + (Math.random() * 400 - 200);
+                const posY = item.y || 1600 + (Math.random() * 400 - 200);
 
                 let contentHtml = '';
 
@@ -693,7 +752,7 @@
             }).join('');
         }
 
-        // Serbest Sürükle & Bırak Mantığı (Drag & Drop)
+        // Sürükle Bırak Mantığı (Zoom Oranı Dahil)
         let activeCardId = null;
         let startX = 0, startY = 0;
 
@@ -701,13 +760,13 @@
             if (e.target.closest('.delete-btn') || e.target.closest('button') || e.target.closest('a')) return;
             activeCardId = id;
             const card = document.getElementById(`card-${id}`);
-            card.style.zIndex = 100;
+            card.style.zIndex = 500;
 
             const clientX = e.clientX || e.touches[0].clientX;
             const clientY = e.clientY || e.touches[0].clientY;
 
-            startX = clientX - card.offsetLeft;
-            startY = clientY - card.offsetTop;
+            startX = (clientX / currentZoom) - card.offsetLeft;
+            startY = (clientY / currentZoom) - card.offsetTop;
 
             document.addEventListener('mousemove', onDrag);
             document.addEventListener('mouseup', stopDrag);
@@ -723,8 +782,8 @@
             const clientX = e.clientX || e.touches[0].clientX;
             const clientY = e.clientY || e.touches[0].clientY;
 
-            let newX = clientX - startX;
-            let newY = clientY - startY;
+            let newX = (clientX / currentZoom) - startX;
+            let newY = (clientY / currentZoom) - startY;
 
             card.style.left = `${newX}px`;
             card.style.top = `${newY}px`;
@@ -736,7 +795,6 @@
                 if (card) {
                     const posX = parseInt(card.style.left);
                     const posY = parseInt(card.style.top);
-                    // Konumu Firestore'a kaydet ki herkeste aynı yerde dursun
                     db.collection("muural_items").doc(activeCardId).update({ x: posX, y: posY });
                 }
             }
@@ -798,7 +856,7 @@
             const dataUrl = canvas.toDataURL();
             db.collection("muural_items").add({
                 type: 'drawing', author: author, url: dataUrl, deviceId: deviceId,
-                x: 100 + Math.random() * 400, y: 100 + Math.random() * 200,
+                x: 1600 + (Math.random() * 400 - 200), y: 1600 + (Math.random() * 400 - 200),
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => { closeModal('drawingModal'); clearCanvas(); document.getElementById('dAuthor').value = ''; });
         }
@@ -806,7 +864,7 @@
         function addSticker(emoji) {
             db.collection("muural_items").add({
                 type: 'sticker', emoji: emoji, deviceId: deviceId,
-                x: 100 + Math.random() * 400, y: 100 + Math.random() * 200,
+                x: 1600 + (Math.random() * 400 - 200), y: 1600 + (Math.random() * 400 - 200),
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => { closeModal('stickerModal'); });
         }
@@ -814,7 +872,7 @@
         function addGif(url) {
             db.collection("muural_items").add({
                 type: 'gif', author: 'Aga', url: url, deviceId: deviceId,
-                x: 100 + Math.random() * 400, y: 100 + Math.random() * 200,
+                x: 1600 + (Math.random() * 400 - 200), y: 1600 + (Math.random() * 400 - 200),
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => { closeModal('gifModal'); });
         }
@@ -825,7 +883,7 @@
             db.collection("muural_items").add({
                 type: 'polaroid', author: document.getElementById('pAuthor').value,
                 url: selectedBase64Image, caption: document.getElementById('pCaption').value, deviceId: deviceId,
-                x: 100 + Math.random() * 400, y: 100 + Math.random() * 200,
+                x: 1600 + (Math.random() * 400 - 200), y: 1600 + (Math.random() * 400 - 200),
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
                 closeModal('polaroidModal');
@@ -842,7 +900,7 @@
             db.collection("muural_items").add({
                 type: 'note', author: document.getElementById('nAuthor').value,
                 content: document.getElementById('nContent').value, font: document.getElementById('nFont').value, deviceId: deviceId,
-                x: 100 + Math.random() * 400, y: 100 + Math.random() * 200,
+                x: 1600 + (Math.random() * 400 - 200), y: 1600 + (Math.random() * 400 - 200),
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
                 closeModal('noteModal');
@@ -856,7 +914,7 @@
             db.collection("muural_items").add({
                 type: 'music', author: document.getElementById('mAuthor').value,
                 title: document.getElementById('mTitle').value, url: document.getElementById('mUrl').value, deviceId: deviceId,
-                x: 100 + Math.random() * 400, y: 100 + Math.random() * 200,
+                x: 1600 + (Math.random() * 400 - 200), y: 1600 + (Math.random() * 400 - 200),
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
                 closeModal('musicModal');
@@ -870,7 +928,7 @@
             const baseUrl = window.location.href.split('?')[0];
             const guestUrl = `${baseUrl}?guest=true`;
             navigator.clipboard.writeText(guestUrl).then(() => {
-                alert("Paylaşım linki kopyalandı! Arkadaşların bu linkle girip içerikleri istediği yere sürüklenebilir.");
+                alert("Paylaşım linki kopyalandı! Arkadaşların bu linkle girip devasa alanda içerikleri dilediği gibi gezip sürükleyebilir.");
             });
         }
 
