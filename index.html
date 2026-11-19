@@ -281,7 +281,7 @@
         .modal-box {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            width: 100%; max-width: 480px;
+            width: 100%; max-width: 500px;
             border-radius: 20px;
             padding: 2rem;
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
@@ -305,23 +305,39 @@
         /* Picker Grids */
         .picker-grid {
             display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 1rem 0;
+            max-height: 320px;
+            overflow-y: auto;
+            padding: 4px;
+        }
+        .sticker-item {
+            font-size: 2.2rem;
+            background: rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .sticker-item:hover { transform: scale(1.15); background: var(--accent-glow); }
+        
+        .gif-grid {
+            display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             margin: 1rem 0;
+            max-height: 320px;
+            overflow-y: auto;
+            padding: 4px;
         }
-        .sticker-img-item {
-            width: 100%; height: 75px; object-fit: contain;
-            background: rgba(0,0,0,0.03); border: 1px solid var(--border-color);
-            border-radius: 10px; padding: 8px; cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
-        }
-        .sticker-img-item:hover { transform: scale(1.1); background: var(--accent-glow); }
-        
         .gif-item {
-            height: 90px; object-fit: cover; border-radius: 8px; width: 100%; cursor: pointer;
+            height: 85px; object-fit: cover; border-radius: 8px; width: 100%; cursor: pointer;
             border: 2px solid transparent; transition: transform 0.2s, border-color 0.2s;
         }
-        .gif-item:hover { transform: scale(1.05); border-color: var(--primary); }
+        .gif-item:hover { transform: scale(1.06); border-color: var(--primary); }
     </style>
 </head>
 <body>
@@ -408,41 +424,85 @@
         </div>
     </div>
 
-    <!-- Modal: Hazır GIF Seçici -->
+    <!-- Modal: 30+ Hazır GIF Seçici -->
     <div class="modal" id="gifModal">
         <div class="modal-box" style="text-align:center;">
-            <h3>🎬 GIF Seç ve Ekle</h3>
-            <p style="color:var(--text-muted); font-size:0.85rem; margin-top:5px;">Panoya eklemek için aşağıdaki GIF'lerden birine tıkla:</p>
-            <div class="picker-grid" style="grid-template-columns: repeat(2, 1fr); margin-top:15px;">
+            <h3>🎬 30+ GIF Arşivi</h3>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-top:5px;">Panoya eklemek için bir GIF seç:</p>
+            <div class="gif-grid">
                 <img src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif')" alt="GIF">
                 <img src="https://media.giphy.com/media/l0HlRnAWXxn0MhOBK/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/l0HlRnAWXxn0MhOBK/giphy.gif')" alt="GIF">
                 <img src="https://media.giphy.com/media/xT5LMFZDsj0AKUDYTS/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/xT5LMFZDsj0AKUDYTS/giphy.gif')" alt="GIF">
                 <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif')" alt="GIF">
                 <img src="https://media.giphy.com/media/5GoVL4DAbEDUQ/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/5GoVL4DAbEDUQ/giphy.gif')" alt="GIF">
                 <img src="https://media.giphy.com/media/111ebonMs90YLu/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/111ebonMs90YLu/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/Ju7l5y9osyymQ/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/Ju7l5y9osyymQ/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/g9582D3ZppC5a/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/g9582D3ZppC5a/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/xUPGGwW8FXAUQkTAyc/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/xUPGGwW8FXAUQkTAyc/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/3o7TKSjRrfIPjeiVyM/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/3o7TKSjRrfIPjeiVyM/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/10hvUmuIMWAejS/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/10hvUmuIMWAejS/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/l4FGpPki5v2Bcd6Ss/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/l4FGpPki5v2Bcd6Ss/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/xTiTnMhJTwNHCHdTZS/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/xTiTnMhJTwNHCHdTZS/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/artj92V8o75VPL7AeQ/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/artj92V8o75VPL7AeQ/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/26n6WuwSvJJk5ZR4A/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/26n6WuwSvJJk5ZR4A/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/l41lUjE9X5mhn4uMU/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/l41lUjE9X5mhn4uMU/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/l3q2XhfQ8oCkm1Ts4/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/l3q2XhfQ8oCkm1Ts4/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/xUA7aWPZSE86V8M8N2/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/xUA7aWPZSE86V8M8N2/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/26FfccbERFDWxcIs0/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/26FfccbERFDWxcIs0/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/3o85xGocUH8RYoDKKs/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/3o85xGocUH8RYoDKKs/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/3o6Zt6ML6BklcajjsA/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/3o6Zt6ML6BklcajjsA/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/l1J9EdzfOSgfyueLm/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/l1J9EdzfOSgfyueLm/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/l0HlRnAWXxn0MhOBK/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/l0HlRnAWXxn0MhOBK/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/26u4cqiYI30juCOGY/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/26u4cqiYI30juCOGY/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/3o6gbbuLW76jkt8vIc/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/3o6gbbuLW76jkt8vIc/giphy.gif')" alt="GIF">
+                <img src="https://media.giphy.com/media/xT5LMFZDsj0AKUDYTS/giphy.gif" class="gif-item" onclick="addGif('https://media.giphy.com/media/xT5LMFZDsj0AKUDYTS/giphy.gif')" alt="GIF">
             </div>
             <button type="button" onclick="closeModal('gifModal')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-muted); cursor:pointer;">Kapat</button>
         </div>
     </div>
 
-    <!-- Modal: Zengin Sticker (Çıkartma) Galerisi -->
+    <!-- Modal: 30+ Zengin Sticker (Çıkartma) Galerisi -->
     <div class="modal" id="stickerModal">
         <div class="modal-box" style="text-align:center;">
-            <h3>⭐ Sticker Seç</h3>
-            <p style="color:var(--text-muted); font-size:0.85rem; margin-top:5px;">Duvara yapıştırmak için bir sticker seç:</p>
-            <div class="picker-grid" style="grid-template-columns: repeat(3, 1fr); max-height:280px; overflow-y:auto; padding:5px;">
-                <img src="https://api.iconify.design/fluent-emoji:fire.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:fire.svg')" alt="Fire">
-                <img src="https://api.iconify.design/fluent-emoji:100-percent.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:100-percent.svg')" alt="100">
-                <img src="https://api.iconify.design/fluent-emoji:clown-face.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:clown-face.svg')" alt="Clown">
-                <img src="https://api.iconify.design/fluent-emoji:crown.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:crown.svg')" alt="Crown">
-                <img src="https://api.iconify.design/fluent-emoji:skull.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:skull.svg')" alt="Skull">
-                <img src="https://api.iconify.design/fluent-emoji:sparkles.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:sparkles.svg')" alt="Sparkles">
-                <img src="https://api.iconify.design/fluent-emoji:rocket.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:rocket.svg')" alt="Rocket">
-                <img src="https://api.iconify.design/fluent-emoji:smiling-face-with-sunglasses.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:smiling-face-with-sunglasses.svg')" alt="Cool">
-                <img src="https://api.iconify.design/fluent-emoji:red-heart.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:red-heart.svg')" alt="Heart">
-                <img src="https://api.iconify.design/fluent-emoji:folded-hands.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:folded-hands.svg')" alt="Pray">
-                <img src="https://api.iconify.design/fluent-emoji:ghost.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:ghost.svg')" alt="Ghost">
-                <img src="https://api.iconify.design/fluent-emoji:star.svg" class="sticker-img-item" onclick="addStickerImage('https://api.iconify.design/fluent-emoji:star.svg')" alt="Star">
+            <h3>⭐ 30+ Sticker Seçimi</h3>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-top:5px;">Duvara yapıştırmak için bir çıkartma seç:</p>
+            <div class="picker-grid">
+                <div class="sticker-item" onclick="addSticker('💖')">💖</div>
+                <div class="sticker-item" onclick="addSticker('🔥')">🔥</div>
+                <div class="sticker-item" onclick="addSticker('💀')">💀</div>
+                <div class="sticker-item" onclick="addSticker('👑')">👑</div>
+                <div class="sticker-item" onclick="addSticker('⭐')">⭐</div>
+                <div class="sticker-item" onclick="addSticker('🤡')">🤡</div>
+                <div class="sticker-item" onclick="addSticker('🚀')">🚀</div>
+                <div class="sticker-item" onclick="addSticker('🐈')">🐈</div>
+                <div class="sticker-item" onclick="addSticker('😎')">😎</div>
+                <div class="sticker-item" onclick="addSticker('🎉')">🎉</div>
+                <div class="sticker-item" onclick="addSticker('💯')">💯</div>
+                <div class="sticker-item" onclick="addSticker('⚡')">⚡</div>
+                <div class="sticker-item" onclick="addSticker('🎯')">🎯</div>
+                <div class="sticker-item" onclick="addSticker('🧠')">🧠</div>
+                <div class="sticker-item" onclick="addSticker('🍻')">🍻</div>
+                <div class="sticker-item" onclick="addSticker('🎮')">🎮</div>
+                <div class="sticker-item" onclick="addSticker('🎸')">🎸</div>
+                <div class="sticker-item" onclick="addSticker('🍕')">🍕</div>
+                <div class="sticker-item" onclick="addSticker('🧊')">🧊</div>
+                <div class="sticker-item" onclick="addSticker('🕶️')">🕶️</div>
+                <div class="sticker-item" onclick="addSticker('🧨')">🧨</div>
+                <div class="sticker-item" onclick="addSticker('🏆')">🏆</div>
+                <div class="sticker-item" onclick="addSticker('💎')">💎</div>
+                <div class="sticker-item" onclick="addSticker('👻')">👻</div>
+                <div class="sticker-item" onclick="addSticker('🦄')">🦄</div>
+                <div class="sticker-item" onclick="addSticker('🛸')">🛸</div>
+                <div class="sticker-item" onclick="addSticker('👾')">👾</div>
+                <div class="sticker-item" onclick="addSticker('🥑')">🥑</div>
+                <div class="sticker-item" onclick="addSticker('🍩')">🍩</div>
+                <div class="sticker-item" onclick="addSticker('🍔')">🍔</div>
+                <div class="sticker-item" onclick="addSticker('🍿')">🍿</div>
+                <div class="sticker-item" onclick="addSticker('⚡')">⚡</div>
             </div>
             <button type="button" onclick="closeModal('stickerModal')" style="background:none; border:none; width:100%; margin-top:15px; color:var(--text-muted); cursor:pointer;">Kapat</button>
         </div>
@@ -576,10 +636,10 @@
                             <div class="card-author" style="color: #666;">~ ${escapeHtml(item.author)}</div>
                         </div>
                     `;
-                } else if(item.type === 'stickerImg') {
+                } else if(item.type === 'sticker') {
                     return `
                         <div class="item-card" style="text-align:center; padding:1.5rem; background:rgba(255,255,255,0.6);">
-                            <img src="${item.url}" style="width:70px; height:70px; object-fit:contain; margin-bottom:5px;" alt="Sticker">
+                            <div style="font-size:3.5rem; margin-bottom:5px;">${item.emoji}</div>
                             <div class="card-author">Sticker</div>
                         </div>
                     `;
@@ -671,10 +731,10 @@
             });
         }
 
-        function addStickerImage(url) {
+        function addSticker(emoji) {
             db.collection("muural_items").add({
-                type: 'stickerImg',
-                url: url,
+                type: 'sticker',
+                emoji: emoji,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
                 closeModal('stickerModal');
