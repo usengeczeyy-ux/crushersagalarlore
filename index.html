@@ -14,7 +14,7 @@
     <style>
         :root {
             --bg-main: #fcf6f0;
-            --bg-card: rgba(255, 255, 255, 0.9);
+            --bg-card: rgba(255, 255, 255, 0.95);
             --border-color: rgba(0, 0, 0, 0.1);
             --primary: #ff6b8b;
             --primary-hover: #ff4770;
@@ -26,7 +26,7 @@
 
         [data-theme="pastel"] {
             --bg-main: #fcf6f0;
-            --bg-card: rgba(255, 255, 255, 0.9);
+            --bg-card: rgba(255, 255, 255, 0.95);
             --border-color: rgba(230, 210, 200, 0.6);
             --primary: #ff758c;
             --primary-hover: #ff526d;
@@ -37,7 +37,7 @@
 
         [data-theme="dark"] {
             --bg-main: #0f1016;
-            --bg-card: rgba(24, 26, 38, 0.9);
+            --bg-card: rgba(24, 26, 38, 0.95);
             --border-color: rgba(255, 255, 255, 0.12);
             --primary: #a855f7;
             --primary-hover: #9333ea;
@@ -48,7 +48,7 @@
 
         [data-theme="y2k"] {
             --bg-main: #120024;
-            --bg-card: rgba(45, 0, 77, 0.85);
+            --bg-card: rgba(45, 0, 77, 0.9);
             --border-color: rgba(255, 0, 128, 0.4);
             --primary: #ff007f;
             --primary-hover: #e60073;
@@ -59,7 +59,7 @@
 
         [data-theme="cork"] {
             --bg-main: #c49a6c;
-            --bg-card: rgba(245, 230, 205, 0.95);
+            --bg-card: rgba(245, 230, 205, 0.98);
             --border-color: rgba(139, 94, 60, 0.4);
             --primary: #8b5e3c;
             --primary-hover: #6f472b;
@@ -146,111 +146,89 @@
             font-weight: 800;
         }
 
-        /* Workspace */
+        /* Serbest Tuval Alanı */
         .workspace {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-            min-height: 70vh;
+            position: relative;
+            width: 100%;
+            min-height: 80vh;
+            overflow: hidden;
         }
 
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 24px;
-        }
-
-        .item-card {
+        /* Serbest Hareket Eden Kartlar */
+        .draggable-card {
+            position: absolute;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 1.2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-            position: relative;
+            padding: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            cursor: grab;
+            user-select: none;
             backdrop-filter: blur(8px);
-            transition: transform 0.2s;
+            transition: box-shadow 0.2s;
+            z-index: 10;
         }
-        .item-card:hover { transform: translateY(-3px); }
+        .draggable-card:active { cursor: grabbing; box-shadow: 0 15px 35px rgba(0,0,0,0.15); z-index: 50; }
 
         .tape {
             position: absolute;
             top: -10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 90px;
-            height: 24px;
-            background: rgba(255, 255, 255, 0.5);
-            border: 1px dashed rgba(0,0,0,0.18);
+            width: 80px;
+            height: 22px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px dashed rgba(0,0,0,0.2);
             z-index: 2;
         }
 
         .delete-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 8px;
+            right: 8px;
             background: rgba(255, 0, 0, 0.1);
             color: #ff4770;
             border: none;
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 10;
-            font-size: 0.8rem;
+            z-index: 15;
+            font-size: 0.75rem;
             transition: background 0.2s, transform 0.2s;
         }
         .delete-btn:hover { background: #ff4770; color: #fff; transform: scale(1.1); }
 
+        /* Polaroid Çerçeve Tasarımı */
+        .polaroid-frame {
+            background: #fff;
+            padding: 10px 10px 25px 10px;
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 220px;
+        }
         .polaroid-img {
-            width: 100%;
-            height: 200px;
+            width: 200px;
+            height: 180px;
             object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 8px;
+            border-radius: 2px;
         }
-
-        .card-caption {
+        .polaroid-caption {
             font-family: 'Caveat', cursive;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             text-align: center;
-            color: var(--text-main);
-            margin-top: 5px;
-        }
-
-        .card-author {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-align: right;
+            color: #333;
             margin-top: 8px;
-            font-weight: 600;
         }
 
-        /* Music Card */
-        .music-card {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 1.2rem;
-        }
-        .vinyl-disc {
-            width: 55px;
-            height: 55px;
-            background: #111;
-            border-radius: 50%;
-            border: 3px dashed #555;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            animation: spin 4s linear infinite paused;
-            flex-shrink: 0;
-        }
-        .vinyl-disc.playing { animation-play-state: running; }
-        .vinyl-center { width: 18px; height: 18px; background: var(--primary); border-radius: 50%; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        /* Font Tanımları */
+        .font-caveat { font-family: 'Caveat', cursive; font-size: 1.4rem; }
+        .font-vt323 { font-family: 'VT323', monospace; font-size: 1.5rem; letter-spacing: 1px; }
+        .font-pixel { font-family: 'Press Start 2P', monospace; font-size: 0.75rem; line-height: 1.5; }
+        .font-sans { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem; }
 
         /* Floating Toolbar */
         .floating-toolbar {
@@ -322,13 +300,12 @@
         }
         .file-picker-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--accent-glow); }
 
-        /* Picker Grids */
         .picker-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 10px;
             margin: 1rem 0;
-            max-height: 320px;
+            max-height: 280px;
             overflow-y: auto;
             padding: 4px;
         }
@@ -349,7 +326,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             margin: 1rem 0;
-            max-height: 320px;
+            max-height: 280px;
             overflow-y: auto;
             padding: 4px;
         }
@@ -381,17 +358,15 @@
         </div>
     </header>
 
-    <div class="workspace">
-        <div id="itemsGrid" class="grid-container">
-            <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: var(--text-muted);">
-                Anılar yükleniyor...
-            </div>
+    <div class="workspace" id="workspace">
+        <div style="text-align: center; padding: 4rem; color: var(--text-muted);">
+            Anılar yükleniyor...
         </div>
     </div>
 
     <!-- Floating Action Toolbar -->
     <div class="floating-toolbar">
-        <button class="tool-btn" onclick="openModal('polaroidModal')" title="Galeriden Fotoğraf Ekle"><i class="fa-solid fa-camera"></i></button>
+        <button class="tool-btn" onclick="openModal('polaroidModal')" title="Polaroid Fotoğraf Ekle"><i class="fa-solid fa-camera"></i></button>
         <button class="tool-btn" onclick="openModal('noteModal')" title="Mini Not Ekle"><i class="fa-solid fa-note-sticky"></i></button>
         <button class="tool-btn" onclick="openModal('gifModal')" title="GIF Seç ve Ekle"><i class="fa-solid fa-clapperboard"></i></button>
         <button class="tool-btn" onclick="openModal('stickerModal')" title="Sticker Seç ve Ekle"><i class="fa-solid fa-face-smile"></i></button>
@@ -399,10 +374,10 @@
         <button class="tool-btn" onclick="openModal('musicModal')" title="Şarkı Kartı Ekle"><i class="fa-solid fa-music"></i></button>
     </div>
 
-    <!-- Modal: Polaroid / Galeri Fotoğrafı -->
+    <!-- Modal: Polaroid -->
     <div class="modal" id="polaroidModal">
         <div class="modal-box">
-            <h3>📸 Galeriden Fotoğraf Ekle</h3>
+            <h3>📸 Polaroid Çerçeveli Fotoğraf Ekle</h3>
             <form onsubmit="addPolaroid(event)">
                 <div class="form-group" style="margin-top:1rem;">
                     <label>Adın / Takma Adın</label>
@@ -416,7 +391,7 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <label>Alt Not / Açıklama</label>
+                    <label>Polaroid Alt Notu</label>
                     <input type="text" id="pCaption" placeholder="Anı notu...">
                 </div>
                 <button type="submit" class="btn" style="width:100%; justify-content:center;">Panoya Ekle</button>
@@ -425,7 +400,7 @@
         </div>
     </div>
 
-    <!-- Modal: Not -->
+    <!-- Modal: Not & Font Seçimi -->
     <div class="modal" id="noteModal">
         <div class="modal-box">
             <h3>📝 Mini Not Ekle</h3>
@@ -433,6 +408,15 @@
                 <div class="form-group" style="margin-top:1rem;">
                     <label>Adın / Takma Adın</label>
                     <input type="text" id="nAuthor" required placeholder="Örn: Eren">
+                </div>
+                <div class="form-group">
+                    <label>Yazı Stili (Font)</label>
+                    <select id="nFont">
+                        <option value="font-caveat">El Yazısı (Estetik)</option>
+                        <option value="font-vt323">Daktilo / Retro</option>
+                        <option value="font-pixel">Piksel (Oyun Tarzı)</option>
+                        <option value="font-sans">Modern / Düz</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>Not İçeriği</label>
@@ -444,7 +428,7 @@
         </div>
     </div>
 
-    <!-- Modal: GIF Seçici -->
+    <!-- Modal: GIF -->
     <div class="modal" id="gifModal">
         <div class="modal-box" style="text-align:center;">
             <h3>🎬 GIF Arşivi</h3>
@@ -482,7 +466,7 @@
         </div>
     </div>
 
-    <!-- Modal: Sticker Seçimi -->
+    <!-- Modal: Sticker -->
     <div class="modal" id="stickerModal">
         <div class="modal-box" style="text-align:center;">
             <h3>⭐ Sticker Seçimi</h3>
@@ -543,10 +527,10 @@
         </div>
     </div>
 
-    <!-- Modal: Müzik -->
+    <!-- Modal: Müzik (Spotify, Apple Music, YouTube Linki) -->
     <div class="modal" id="musicModal">
         <div class="modal-box">
-            <h3>💿 Şarkı Kartı Ekle</h3>
+            <h3>💿 Şarkı Kartı Ekle (Spotify / Apple Music / YouTube)</h3>
             <form onsubmit="addMusic(event)">
                 <div class="form-group" style="margin-top:1rem;">
                     <label>Adın / Takma Adın</label>
@@ -557,10 +541,10 @@
                     <input type="text" id="mTitle" required placeholder="Örn: Duman - Belki Alışman Lazım">
                 </div>
                 <div class="form-group">
-                    <label>Ses / Şarkı Linki (MP3 veya Ses Dosyası URL)</label>
-                    <input type="url" id="mUrl" required placeholder="https://.../sarki.mp3">
+                    <label>Şarkı Bağlantısı (Spotify, Apple Music veya YouTube Linki)</label>
+                    <input type="url" id="mUrl" required placeholder="https://open.spotify.com/track/... veya https://youtu.be/...">
                 </div>
-                <button type="submit" class="btn" style="width:100%; justify-content:center;">CD'yi Ekle</button>
+                <button type="submit" class="btn" style="width:100%; justify-content:center;">Şarkı Kartını Ekle</button>
                 <button type="button" onclick="closeModal('musicModal')" style="background:none; border:none; width:100%; margin-top:10px; color:var(--text-muted); cursor:pointer;">İptal</button>
             </form>
         </div>
@@ -581,11 +565,9 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Rol ve Kurucu Kontrolü
         const urlParams = new URLSearchParams(window.location.search);
         const isOwner = !urlParams.has('guest');
 
-        // Her tarayıcı için benzersiz bir cihaz kimliği oluşturalım ki kimin ne eklediğini bilelim
         let deviceId = localStorage.getItem('muural_device_id');
         if (!deviceId) {
             deviceId = 'dev_' + Math.random().toString(36).substring(2, 9);
@@ -602,7 +584,6 @@
             document.getElementById('themeContainer').style.display = "none";
         }
 
-        // Tema Yönetimi
         function changeTheme(themeName) {
             document.documentElement.setAttribute('data-theme', themeName);
             db.collection("board_settings").doc("main").set({ theme: themeName }, { merge: true });
@@ -612,7 +593,6 @@
             db.collection("board_settings").doc("main").set({ title: title }, { merge: true });
         }
 
-        // Firestore Canlı Dinleme
         db.collection("board_settings").doc("main").onSnapshot((doc) => {
             if(doc.exists) {
                 const data = doc.data();
@@ -635,97 +615,155 @@
         });
 
         function renderItems(items) {
-            const grid = document.getElementById('itemsGrid');
+            const workspace = document.getElementById('workspace');
             if(items.length === 0) {
-                grid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: var(--text-muted);">Henüz bir şey eklenmemiş. Alttaki butonlarla ilk hatırayı sen ekle!</div>`;
+                workspace.innerHTML = `<div style="text-align: center; padding: 4rem; color: var(--text-muted);">Henüz bir şey eklenmemiş. Alttaki butonlarla ilk hatırayı sen ekle!</div>`;
                 return;
             }
 
-            grid.innerHTML = items.map(item => {
-                // Silme yetkisi: Kurucuysan ya da içeriği ekleyen kişi sensen sil butonu görünür
+            workspace.innerHTML = items.map(item => {
                 const canDelete = isOwner || item.deviceId === deviceId;
                 const deleteBtnHtml = canDelete ? `<button class="delete-btn" onclick="deleteItem('${item.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>` : '';
 
-                if(item.type === 'polaroid' || item.type === 'gif') {
-                    return `
-                        <div class="item-card">
-                            <div class="tape"></div>
-                            ${deleteBtnHtml}
-                            <img src="${escapeHtml(item.url)}" class="polaroid-img" alt="Görsel/GIF">
-                            ${item.caption ? `<div class="card-caption">${escapeHtml(item.caption)}</div>` : ''}
-                            <div class="card-author">~ ${escapeHtml(item.author || 'Aga')}</div>
+                // Konum koordinatları (Varsayılan olarak rastgele veya kayıtlı konum)
+                const posX = item.x || 80 + (Math.random() * 600);
+                const posY = item.y || 80 + (Math.random() * 300);
+
+                let contentHtml = '';
+
+                if(item.type === 'polaroid') {
+                    contentHtml = `
+                        <div class="polaroid-frame">
+                            <img src="${escapeHtml(item.url)}" class="polaroid-img" alt="Polaroid">
+                            ${item.caption ? `<div class="polaroid-caption">${escapeHtml(item.caption)}</div>` : ''}
                         </div>
+                        <div class="card-author" style="margin-top:6px;">~ ${escapeHtml(item.author || 'Aga')}</div>
+                    `;
+                } else if(item.type === 'gif') {
+                    contentHtml = `
+                        <div class="polaroid-frame">
+                            <img src="${escapeHtml(item.url)}" class="polaroid-img" alt="GIF">
+                            <div class="polaroid-caption">GIF Anısı</div>
+                        </div>
+                        <div class="card-author" style="margin-top:6px;">~ ${escapeHtml(item.author || 'Aga')}</div>
                     `;
                 } else if(item.type === 'note') {
-                    return `
-                        <div class="item-card" style="background: rgba(255, 248, 196, 0.95); color: #333;">
-                            <div class="tape" style="background: rgba(200,200,200,0.5);"></div>
-                            ${deleteBtnHtml}
-                            <div style="font-family:'Caveat', cursive; font-size:1.45rem; line-height:1.4; word-break:break-word; margin-top:5px;">${escapeHtml(item.content)}</div>
-                            <div class="card-author" style="color: #666;">~ ${escapeHtml(item.author)}</div>
+                    const fontClass = item.font || 'font-caveat';
+                    contentHtml = `
+                        <div style="background: rgba(255, 248, 196, 0.98); color: #333; padding: 15px; border-radius: 12px; min-width: 180px; max-width: 240px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                            <div class="${fontClass}" style="line-height:1.4; word-break:break-word;">${escapeHtml(item.content)}</div>
+                            <div class="card-author" style="color: #666; margin-top:8px;">~ ${escapeHtml(item.author)}</div>
                         </div>
                     `;
                 } else if(item.type === 'sticker') {
-                    return `
-                        <div class="item-card" style="text-align:center; padding:1.5rem; background:rgba(255,255,255,0.6);">
-                            ${deleteBtnHtml}
-                            <div style="font-size:3.5rem; margin-bottom:5px;">${item.emoji}</div>
-                            <div class="card-author">Sticker</div>
+                    contentHtml = `
+                        <div style="text-align:center; padding:10px;">
+                            <div style="font-size:3.5rem;">${item.emoji}</div>
                         </div>
                     `;
                 } else if(item.type === 'drawing') {
-                    return `
-                        <div class="item-card">
-                            <div class="tape"></div>
-                            ${deleteBtnHtml}
-                            <img src="${item.url}" class="polaroid-img" style="background:#fff; margin-top:5px;" alt="Çizim">
-                            <div class="card-author">Çizen: ~ ${escapeHtml(item.author)}</div>
+                    contentHtml = `
+                        <div class="polaroid-frame" style="padding-bottom:10px;">
+                            <img src="${item.url}" style="width:180px; height:120px; object-fit:contain; background:#fff;" alt="Çizim">
+                            <div class="card-author" style="margin-top:5px;">Çizen: ~ ${escapeHtml(item.author)}</div>
                         </div>
                     `;
                 } else if(item.type === 'music') {
-                    return `
-                        <div class="item-card music-card">
-                            <div class="tape"></div>
-                            ${deleteBtnHtml}
-                            <div class="vinyl-disc" id="disc-${item.id}" onclick="toggleAudio('${item.id}', '${item.url}')">
-                                <div class="vinyl-center"></div>
+                    contentHtml = `
+                        <div style="display:flex; align-items:center; gap:12px; padding:10px; min-width:220px;">
+                            <div style="width:45px; height:45px; background:var(--primary); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.2rem; flex-shrink:0;">
+                                <i class="fa-solid fa-music"></i>
                             </div>
                             <div style="overflow:hidden;">
-                                <div style="font-weight:700; font-size:0.9rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(item.title)}</div>
-                                <div style="font-size:0.75rem; color:var(--text-muted);">Ekleyen: ${escapeHtml(item.author)}</div>
-                                <div style="font-size:0.7rem; color:var(--primary); margin-top:4px; font-weight:700; cursor:pointer;" onclick="toggleAudio('${item.id}', '${item.url}')">▶ CD'ye Bas Çalsın</div>
+                                <div style="font-weight:700; font-size:0.85rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(item.title)}</div>
+                                <div style="font-size:0.7rem; color:var(--text-muted);">Ekleyen: ${escapeHtml(item.author)}</div>
+                                <a href="${escapeHtml(item.url)}" target="_blank" style="display:inline-block; font-size:0.7rem; color:#fff; background:var(--primary); padding:3px 8px; border-radius:6px; text-decoration:none; margin-top:5px; font-weight:700;">▶ Dinle / Aç</a>
                             </div>
-                            <audio id="audio-${item.id}" src="${item.url}" onended="stopDisc('${item.id}')"></audio>
                         </div>
                     `;
                 }
+
+                return `
+                    <div class="draggable-card" id="card-${item.id}" style="left: ${posX}px; top: ${posY}px;" onmousedown="startDrag(event, '${item.id}')" ontouchstart="startDrag(event, '${item.id}')">
+                        <div class="tape"></div>
+                        ${deleteBtnHtml}
+                        ${contentHtml}
+                    </div>
+                `;
             }).join('');
         }
 
-        // İçerik Silme Fonksiyonu
+        // Serbest Sürükle & Bırak Mantığı (Drag & Drop)
+        let activeCardId = null;
+        let startX = 0, startY = 0;
+
+        function startDrag(e, id) {
+            if (e.target.closest('.delete-btn') || e.target.closest('button') || e.target.closest('a')) return;
+            activeCardId = id;
+            const card = document.getElementById(`card-${id}`);
+            card.style.zIndex = 100;
+
+            const clientX = e.clientX || e.touches[0].clientX;
+            const clientY = e.clientY || e.touches[0].clientY;
+
+            startX = clientX - card.offsetLeft;
+            startY = clientY - card.offsetTop;
+
+            document.addEventListener('mousemove', onDrag);
+            document.addEventListener('mouseup', stopDrag);
+            document.addEventListener('touchmove', onDrag);
+            document.addEventListener('touchend', stopDrag);
+        }
+
+        function onDrag(e) {
+            if (!activeCardId) return;
+            const card = document.getElementById(`card-${activeCardId}`);
+            if (!card) return;
+
+            const clientX = e.clientX || e.touches[0].clientX;
+            const clientY = e.clientY || e.touches[0].clientY;
+
+            let newX = clientX - startX;
+            let newY = clientY - startY;
+
+            card.style.left = `${newX}px`;
+            card.style.top = `${newY}px`;
+        }
+
+        function stopDrag(e) {
+            if (activeCardId) {
+                const card = document.getElementById(`card-${activeCardId}`);
+                if (card) {
+                    const posX = parseInt(card.style.left);
+                    const posY = parseInt(card.style.top);
+                    // Konumu Firestore'a kaydet ki herkeste aynı yerde dursun
+                    db.collection("muural_items").doc(activeCardId).update({ x: posX, y: posY });
+                }
+            }
+            activeCardId = null;
+            document.removeEventListener('mousemove', onDrag);
+            document.removeEventListener('mouseup', stopDrag);
+            document.removeEventListener('touchmove', onDrag);
+            document.removeEventListener('touchend', stopDrag);
+        }
+
         function deleteItem(id) {
             if(confirm("Bu içeriği silmek istediğine emin misin?")) {
-                db.collection("muural_items").doc(id).delete().catch(error => {
-                    alert("Silinirken bir hata oluştu.");
-                });
+                db.collection("muural_items").doc(id).delete();
             }
         }
 
-        // Cihazdan Görsel Seçme Mantığı
         let selectedBase64Image = "";
         function handleImageSelect(e) {
             const file = e.target.files[0];
             if (file) {
                 document.getElementById('fileNameDisplay').innerText = file.name;
                 const reader = new FileReader();
-                reader.onload = function(evt) {
-                    selectedBase64Image = evt.target.result;
-                };
+                reader.onload = function(evt) { selectedBase64Image = evt.target.result; };
                 reader.readAsDataURL(file);
             }
         }
 
-        // Çizim Tahtası Mantığı
         const canvas = document.getElementById('paintCanvas');
         const ctx = canvas.getContext('2d');
         let painting = false;
@@ -737,11 +775,9 @@
             ctx.lineWidth = 4;
             ctx.lineCap = 'round';
             ctx.strokeStyle = '#000';
-
             const rect = canvas.getBoundingClientRect();
             const x = (e.clientX || e.touches[0].clientX) - rect.left;
             const y = (e.clientY || e.touches[0].clientY) - rect.top;
-
             ctx.lineTo(x, y);
             ctx.stroke();
             ctx.beginPath();
@@ -761,90 +797,37 @@
             const author = document.getElementById('dAuthor').value.trim() || "Biri";
             const dataUrl = canvas.toDataURL();
             db.collection("muural_items").add({
-                type: 'drawing',
-                author: author,
-                url: dataUrl,
-                deviceId: deviceId,
+                type: 'drawing', author: author, url: dataUrl, deviceId: deviceId,
+                x: 100 + Math.random() * 400, y: 100 + Math.random() * 200,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(() => {
-                closeModal('drawingModal');
-                clearCanvas();
-                document.getElementById('dAuthor').value = '';
-            });
+            }).then(() => { closeModal('drawingModal'); clearCanvas(); document.getElementById('dAuthor').value = ''; });
         }
 
         function addSticker(emoji) {
             db.collection("muural_items").add({
-                type: 'sticker',
-                emoji: emoji,
-                deviceId: deviceId,
+                type: 'sticker', emoji: emoji, deviceId: deviceId,
+                x: 100 + Math.random() * 400, y: 100 + Math.random() * 200,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(() => {
-                closeModal('stickerModal');
-            });
+            }).then(() => { closeModal('stickerModal'); });
         }
 
         function addGif(url) {
             db.collection("muural_items").add({
-                type: 'gif',
-                author: 'Aga',
-                url: url,
-                deviceId: deviceId,
+                type: 'gif', author: 'Aga', url: url, deviceId: deviceId,
+                x: 100 + Math.random() * 400, y: 100 + Math.random() * 200,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(() => {
-                closeModal('gifModal');
-            });
+            }).then(() => { closeModal('gifModal'); });
         }
 
-        let currentPlayingAudio = null;
-        let currentPlayingDisc = null;
-
-        function toggleAudio(id, url) {
-            const audio = document.getElementById(`audio-${id}`);
-            const disc = document.getElementById(`disc-${id}`);
-
-            if (currentPlayingAudio && currentPlayingAudio !== audio) {
-                currentPlayingAudio.pause();
-                currentPlayingAudio.currentTime = 0;
-                if(currentPlayingDisc) currentPlayingDisc.classList.remove('playing');
-            }
-
-            if (audio.paused) {
-                audio.play().catch(e => alert("Ses çalınamadı. Lütfen geçerli bir doğrudan ses/MP3 linki girin."));
-                disc.classList.add('playing');
-                currentPlayingAudio = audio;
-                currentPlayingDisc = disc;
-            } else {
-                audio.pause();
-                disc.classList.remove('playing');
-                currentPlayingAudio = null;
-                currentPlayingDisc = null;
-            }
-        }
-
-        function stopDisc(id) {
-            const disc = document.getElementById(`disc-${id}`);
-            if(disc) disc.classList.remove('playing');
-            currentPlayingAudio = null;
-            currentPlayingDisc = null;
-        }
-
-        // Veritabanına Ekleme Fonksiyonları
         function addPolaroid(e) {
             e.preventDefault();
-            if (!selectedBase64Image) {
-                alert("Lütfen cihazından bir fotoğraf seç!");
-                return;
-            }
-            const newItem = {
-                type: 'polaroid',
-                author: document.getElementById('pAuthor').value,
-                url: selectedBase64Image,
-                caption: document.getElementById('pCaption').value,
-                deviceId: deviceId,
+            if (!selectedBase64Image) { alert("Lütfen cihazından bir fotoğraf seç!"); return; }
+            db.collection("muural_items").add({
+                type: 'polaroid', author: document.getElementById('pAuthor').value,
+                url: selectedBase64Image, caption: document.getElementById('pCaption').value, deviceId: deviceId,
+                x: 100 + Math.random() * 400, y: 100 + Math.random() * 200,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            };
-            db.collection("muural_items").add(newItem).then(() => {
+            }).then(() => {
                 closeModal('polaroidModal');
                 document.getElementById('pAuthor').value = '';
                 document.getElementById('pCaption').value = '';
@@ -856,14 +839,12 @@
 
         function addNote(e) {
             e.preventDefault();
-            const newItem = {
-                type: 'note',
-                author: document.getElementById('nAuthor').value,
-                content: document.getElementById('nContent').value,
-                deviceId: deviceId,
+            db.collection("muural_items").add({
+                type: 'note', author: document.getElementById('nAuthor').value,
+                content: document.getElementById('nContent').value, font: document.getElementById('nFont').value, deviceId: deviceId,
+                x: 100 + Math.random() * 400, y: 100 + Math.random() * 200,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            };
-            db.collection("muural_items").add(newItem).then(() => {
+            }).then(() => {
                 closeModal('noteModal');
                 document.getElementById('nAuthor').value = '';
                 document.getElementById('nContent').value = '';
@@ -872,15 +853,12 @@
 
         function addMusic(e) {
             e.preventDefault();
-            const newItem = {
-                type: 'music',
-                author: document.getElementById('mAuthor').value,
-                title: document.getElementById('mTitle').value,
-                url: document.getElementById('mUrl').value,
-                deviceId: deviceId,
+            db.collection("muural_items").add({
+                type: 'music', author: document.getElementById('mAuthor').value,
+                title: document.getElementById('mTitle').value, url: document.getElementById('mUrl').value, deviceId: deviceId,
+                x: 100 + Math.random() * 400, y: 100 + Math.random() * 200,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            };
-            db.collection("muural_items").add(newItem).then(() => {
+            }).then(() => {
                 closeModal('musicModal');
                 document.getElementById('mAuthor').value = '';
                 document.getElementById('mTitle').value = '';
@@ -892,7 +870,7 @@
             const baseUrl = window.location.href.split('?')[0];
             const guestUrl = `${baseUrl}?guest=true`;
             navigator.clipboard.writeText(guestUrl).then(() => {
-                alert("Arkadaşların için paylaşım linki kopyalandı! Bu linkle girenler pano temasını değiştiremez ama içerik ekleyebilir ve kendi eklediklerini silebilir.");
+                alert("Paylaşım linki kopyalandı! Arkadaşların bu linkle girip içerikleri istediği yere sürüklenebilir.");
             });
         }
 
